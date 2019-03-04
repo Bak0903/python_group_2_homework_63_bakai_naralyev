@@ -1,5 +1,5 @@
 from django.contrib import admin
-from webapp.models import Movie
+from webapp.models import Movie, Category, Hall, Seat, Show
 
 
 class MovieAdmin(admin.ModelAdmin):
@@ -8,3 +8,7 @@ class MovieAdmin(admin.ModelAdmin):
     search_fields = ['name', 'id']
 
 admin.site.register(Movie, MovieAdmin)
+admin.site.register(Category)
+admin.site.register(Hall)
+admin.site.register(Seat)
+admin.site.register(Show)
