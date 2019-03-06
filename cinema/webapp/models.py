@@ -66,7 +66,7 @@ class Ticket(models.Model):
     return_ticket = models.BooleanField(default=False)
 
     def __str__(self):
-        return 'Номер билета %s, сеанс %s' % (self.id, self.show)
+        return 'Номер билета %s, сеанс %s, залл %s' % (self.id, self.show.film, self.show.hall)
 
 
 class Reservation(models.Model):
