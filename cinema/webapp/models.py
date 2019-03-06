@@ -56,13 +56,13 @@ class Discount(models.Model):
     discount_finish = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
-        return '%s - %s\%' % (self.name, self.discount)
+        return '%s - %s процентов' % (self.name, self.discount)
 
 
 class Ticket(models.Model):
     show = models.ForeignKey(Show, related_name='ticket_show', on_delete=models.PROTECT)
     seat = models.ForeignKey(Seat, related_name='ticket_seat', on_delete=models.PROTECT)
-    discount = models.ForeignKey(Discount, related_name='ticket_discount', on_delete=models.PROTECT)
+    discount = models.ForeignKey(Discount, null=True, blank=True, related_name='ticket_discount', on_delete=models.PROTECT)
     return_ticket = models.BooleanField(default=False)
 
     def __str__(self):
