@@ -1,4 +1,5 @@
 from django.db import models
+import uuid
 
 
 class Category(models.Model):
@@ -46,3 +47,45 @@ class Show(models.Model):
 
     def __str__(self):
         return 'Сеанс %s, зал %s, начало %s' %(self.film, self.hall, self.start)
+
+
+class Discount(models.Model):
+    name = models.CharField(max_length=255)
+    discount = models.IntegerField()
+    discount_start = models.DateTimeField(null=True, blank=True)
+    discount_finish = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return '%s - %s\%' % (self.name, self.discount)
+
+
+class Ticket(models.Model):
+    show = models.ForeignKey(Show, related_name='ticket_show', on_delete=models.PROTECT)
+    seat = models.ForeignKey(Seat, related_name='ticket_seat', on_delete=models.PROTECT)
+    discount = models.ForeignKey(Discount, related_name='ticket_discount', on_delete=models.PROTECT)
+    return_ticket = models.BooleanField(default=False)
+
+    def __str__(self):
+        return 'Номер билета %s, сеанс %s' % (self.id, self.show)
+
+
+class Reservation(models.Model):
+    STATUS_NEW = 'Создано'
+    STATUS_BOUGHT_OUT = 'Выкуплено'
+    STATUS_CANCELED = 'Отмена'
+
+    STATUS_CHOICES = (
+        (STATUS_NEW, 'Новый'),
+        (STATUS_BOUGHT_OUT, 'Выкуплено'),
+        (STATUS_CANCELED, 'Отмена')
+    )
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+    show = models.ForeignKey(Show, related_name='reservation_show', on_delete=models.PROTECT)
+    seats = models.ManyToManyField(Seat, related_name='reservation_seats')
+    status = models.CharField(max_length=255, default=STATUS_NEW, choices=STATUS_CHOICES)
+    created_at = models.DateTimeField(auto_now_add=True)
+    changed_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return 'Код брони %s, статус %s' % (self.id, self.status)
