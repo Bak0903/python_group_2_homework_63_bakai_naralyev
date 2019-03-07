@@ -4,6 +4,7 @@ import string
 from django.conf import settings
 from django.core.exceptions import ValidationError
 
+
 def validate_even(value):
     if value  > 100:
         raise ValidationError('%s Скидка не может быть больше 100' % value)
