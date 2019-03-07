@@ -1,5 +1,7 @@
 from django.db import models
-import uuid
+import random
+import string
+from django.conf import settings
 
 
 class Category(models.Model):
@@ -8,6 +10,9 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name_plural = 'Categories'
 
 
 class Movie(models.Model):
@@ -69,6 +74,13 @@ class Ticket(models.Model):
         return 'Номер билета %s, сеанс %s, залл %s' % (self.id, self.show.film, self.show.hall)
 
 
+def generate_code():
+    code = ""
+    for i in range(0, settings.BOOKING_CODE_LENGTH):
+        code += random.choice(string.digits)
+    return code
+
+
 class Reservation(models.Model):
     STATUS_NEW = 'Создано'
     STATUS_BOUGHT_OUT = 'Выкуплено'
@@ -80,7 +92,7 @@ class Reservation(models.Model):
         (STATUS_CANCELED, 'Отмена')
     )
 
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+    code = models.CharField(max_length=10, unique_for_date='created_at', default=generate_code, editable=False)
     show = models.ForeignKey(Show, related_name='reservation_show', on_delete=models.PROTECT)
     seats = models.ManyToManyField(Seat, related_name='reservation_seats')
     status = models.CharField(max_length=255, default=STATUS_NEW, choices=STATUS_CHOICES)
@@ -88,4 +100,4 @@ class Reservation(models.Model):
     changed_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return 'Код брони %s, статус %s' % (self.id, self.status)
+        return 'Код брони %s, статус %s' % (self.code, self.status)
