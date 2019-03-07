@@ -18,12 +18,17 @@ class InlineCategorySerializer(serializers.ModelSerializer):
 
 class MovieSerializer(serializers.ModelSerializer):
     url = serializers.HyperlinkedIdentityField(view_name='api_v1:movie-detail')
-    genre = InlineCategorySerializer(many=True)
+    # genre = InlineCategorySerializer(many=True)
 
     class Meta:
         model = Movie
         fields = ('url', 'id', 'name', 'genre','description', 'poster', 'release_date', 'finish_date')
 
+
+class InlineMovieSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Movie
+        fields = ('name')
 
 class HallSerializer(serializers.ModelSerializer):
     url = serializers.HyperlinkedIdentityField(view_name='api_v1:hall-detail')
@@ -52,6 +57,7 @@ class ShowSerializer(serializers.ModelSerializer):
     url = serializers.HyperlinkedIdentityField(view_name='api_v1:show-detail')
     film_url = serializers.HyperlinkedRelatedField(view_name='api_v1:movie-detail', source='film', read_only=True)
     hall_url = serializers.HyperlinkedRelatedField(view_name='api_v1:hall-detail', source='hall', read_only=True)
+    # film = InlineMovieSerializer(many=True, read_only=True)
 
     class Meta:
         model = Show
@@ -80,9 +86,9 @@ class InlineDiscountSerializer(serializers.ModelSerializer):
 
 class TicketSerializer(serializers.ModelSerializer):
     url = serializers.HyperlinkedIdentityField(view_name='api_v1:ticket-detail')
-    # discount = InlineDiscountSerializer(many=True)
-    # show = InlineShowSerializer(many=True)
-    # seat = InlineSeatSerializer(many=True)
+    # discount = InlineDiscountSerializer(many=True, read_only=True)
+    # show = InlineShowSerializer(many=True, read_only=True)
+    # seat = InlineSeatSerializer(many=True, read_only=True)
 
     class Meta:
         model = Ticket
@@ -91,8 +97,8 @@ class TicketSerializer(serializers.ModelSerializer):
 
 class ReservationSerializer(serializers.ModelSerializer):
     url = serializers.HyperlinkedIdentityField(view_name='api_v1:reservation-detail')
-    # seat = InlineSeatSerializer(many=True)
-    # show = InlineShowSerializer(many=True)
+    # seats = InlineSeatSerializer(many=True, read_only=True)
+    # show = InlineShowSerializer(many=True, read_only=True)
 
     class Meta:
         model = Reservation

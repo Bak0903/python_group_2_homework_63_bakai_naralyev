@@ -51,7 +51,7 @@ class Show(models.Model):
 
 class Discount(models.Model):
     name = models.CharField(max_length=255)
-    discount = models.IntegerField()
+    discount = models.DecimalField(max_digits=5, decimal_places=2)
     discount_start = models.DateTimeField(null=True, blank=True)
     discount_finish = models.DateTimeField(null=True, blank=True)
 
