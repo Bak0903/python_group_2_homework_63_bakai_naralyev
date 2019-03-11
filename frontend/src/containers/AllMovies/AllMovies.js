@@ -1,4 +1,3 @@
-import { Route, Switch, BrowserRouter } from 'react-router-dom';
 import React, {Component} from 'react';
 import './AllMovies.css';
 import GetList from '../../consructors/GetList/GetList';
@@ -8,7 +7,7 @@ import axios from 'axios';
 class AllMovies extends Component {
 
     state = {
-        allMovies: [],
+        allMovies: {},
     };
 
     getAll = () => {
@@ -25,8 +24,12 @@ class AllMovies extends Component {
             .catch(error => {console.log(error);});
     };
 
-    purchaseContinueHandler = (pathWord) => {
-        this.props.history.push({pathname: '/' + pathWord});
+    purchaseContinueHandler = (pathWord, id) => {
+        this.props.history.push({
+            pathname: '/' + pathWord + '/' + id
+        });
+
+        // this.props.history.push({pathname: '/' + pathWord});
     };
 
 
