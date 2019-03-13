@@ -24,7 +24,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class MovieSerializer(serializers.ModelSerializer):
     url = serializers.HyperlinkedIdentityField(view_name='api_v1:movie-detail')
-    genre = InlineCategorySerializer(many=True)
+    # genre = InlineCategorySerializer(many=True)
 
     class Meta:
         model = Movie

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './AllMovies.css';
-import GetList from '../../consructors/GetList/GetList';
+import GetList from '../../components/GetList/GetList';
+import {NavLink} from "react-router-dom";
 import axios from 'axios';
 
 
@@ -15,7 +16,7 @@ class AllMovies extends Component {
             const requests = response.data.map(movie => {
                 return {
                     id: movie.id,
-                    genre: movie.genre,
+                    poster: movie.poster,
                     name: movie.name
                 };
             });
@@ -24,30 +25,6 @@ class AllMovies extends Component {
             .catch(error => {console.log(error);});
     };
 
-    purchaseContinueHandler = (pathWord, id) => {
-        this.props.history.push({
-            pathname: '/' + pathWord + '/' + id
-        });
-
-        // this.props.history.push({pathname: '/' + pathWord});
-    };
-
-
-    // getInfo = (code) => {
-    //     axios.get('alpha/' + code).then(response => {
-    //         const borders = response.data.borders.map(element => {
-    //             return axios.get('alpha/' + element).then(response => {
-    //                 return response.data;
-    //             });
-    //         });
-    //         return Promise.all(borders)
-    //             .then(neighbour => this.setState({
-    //                 selectedCountry: response.data,
-    //                 borders: [...neighbour]
-    //             }));
-    //     })
-    // };
-
     componentDidMount() {
         this.getAll();
     }
@@ -55,15 +32,11 @@ class AllMovies extends Component {
     render() {
         return (
             <div className={'AllMovies'}>
+                <p><NavLink to='/movies/add' className={'btn btn-primary w-25 m-auto'}>Добавить фильм</NavLink></p>
                 <GetList
                     list={this.state.allMovies}
-                    click={this.purchaseContinueHandler}
+                    click={this.movieDetails}
                 />
-                {/*<Country*/}
-                    {/*info={this.state.selectedCountry}*/}
-                    {/*borders={this.state.borders}*/}
-                    {/*click={this.getInfo}*/}
-                {/*/>*/}
             </div>
         );
     }

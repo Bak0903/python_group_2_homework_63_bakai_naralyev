@@ -1,16 +1,17 @@
 import React, {Component} from 'react';
-import './GetList.css';
+import MovieCard from '../MovieCard/MovieCard';
+
 
 class GetList extends Component {
     render() {
         return (
-            <div className={"list"}>
+            <div className={"d-inline-flex flex-wrap"}>
                 {Object.values(this.props.list).map((item, i) => {return (
-                    <span
+                    <MovieCard
                         key={i}
-                        onClick={() => this.props.click('SelectedMovie', item.id)}
-                        className={"item"}
-                    >{item.name}</span>)
+                        onClick={() => this.props.click(item.id)}
+                        movie={item}
+                    />)
                 })}
             </div>
         );
