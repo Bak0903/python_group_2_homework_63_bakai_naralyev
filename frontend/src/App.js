@@ -8,6 +8,7 @@ import EditMovie from './containers/EditMovie/EditMovie';
 import AllHalls from './containers/AllHalls/AllHalls';
 import SelectedHall from './containers/SelectedHall/SelectedHall';
 import HallAdd from './containers/HallAdd/HallAdd';
+import HallEdit from './containers/HallEdit/HallEdit';
 import Layout from "./Layout";
 
 class App extends Component {
@@ -17,6 +18,7 @@ class App extends Component {
                 <BrowserRouter>
                     <Layout>
                         <Switch>
+                            <Route path="/halls/:id/edit" component={HallEdit}/>
                             <Route path="/halls/add" component={HallAdd}/>
                             <Route path="/halls/:id" component={SelectedHall}/>
                             <Route path="/halls" exact component={AllHalls}/>

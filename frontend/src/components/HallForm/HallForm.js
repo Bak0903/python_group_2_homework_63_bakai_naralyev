@@ -12,13 +12,12 @@ class HallForm extends Component {
             submitEnabled: true
         };
         if(this.props.hall) {
-            this.state.hall.name = this.props.hall.name;
+            this.state.hall= this.props.hall;
         }
     }
 
     componentDidMount() {
-        console.log('privet');
-        console.log(this.state.hall.name);
+        console.log(this.props.hall);
     }
 
 
@@ -65,7 +64,6 @@ class HallForm extends Component {
 
     render() {
         if (this.state.hall) {
-            console.log(this.state.hall.name);
             const name = this.state.hall.name;
             const submitEnabled = this.state.submitEnabled;
             return <div className="mt-3">

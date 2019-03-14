@@ -26,7 +26,6 @@ class SelectedMovie extends Component {
 
     render() {
         if (!this.state.selectedHall) return null;
-        console.log(this.state.selectedHall);
         const {name, id} = this.state.selectedHall;
         return (
             <div className="card pb-2 col-12">
