@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import './AllMovies.css';
 import GetList from '../../components/GetList/GetList';
 import {NavLink} from "react-router-dom";
 import axios from 'axios';
@@ -35,7 +34,6 @@ class AllMovies extends Component {
                 <p><NavLink to='/movies/add' className={'btn btn-primary w-25 m-auto'}>Добавить фильм</NavLink></p>
                 <GetList
                     list={this.state.allMovies}
-                    click={this.movieDetails}
                 />
             </div>
         );
