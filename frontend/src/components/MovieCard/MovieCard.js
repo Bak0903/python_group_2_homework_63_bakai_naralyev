@@ -10,7 +10,7 @@ class MovieCard extends Component {
             <div className="card col-sm-12 col-md-4 border-0" id={id}>
                 <img className="card-img-top" src={poster} alt="poster"/>
                     <div className="card-body">
-                        <NavLink to={'/movies/' + id}><p className="card-text">{name}</p></NavLink>
+                        <NavLink to={'/movies/' + id}><p className="card-text h3">{name}</p></NavLink>
                     </div>
             </div>
         );

@@ -30,9 +30,10 @@ class AllMovies extends Component {
 
     render() {
         return (
-            <div className={'AllMovies'}>
-                <p><NavLink to='/movies/add' className={'btn btn-primary w-25 m-auto'}>Добавить фильм</NavLink></p>
+            <div className='AllMovies'>
+                <div><NavLink to='/movies/add' className='btn btn-outline-warning w-25 mb-3 float-right'>Добавить фильм</NavLink></div>
                 <GetList
+                    name={'movies'}
                     list={this.state.allMovies}
                 />
             </div>
