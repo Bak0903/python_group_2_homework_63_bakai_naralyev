@@ -17,7 +17,7 @@ class SelectedMovie extends Component {
     };
 
     deleteHall = (id) => {
-        axios.delete('halls/' + id).then(this.props.history.replace('/'))
+        axios.delete('halls/' + id).then(this.props.history.replace('/halls/'))
     };
 
     componentDidMount() {

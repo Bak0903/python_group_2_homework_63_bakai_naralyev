@@ -1,46 +1,41 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import MovieForm from '../../components/MovieForm/MovieForm';
+import HallForm from '../../components/HallForm/HallForm';
 
 
-class ItemAdd extends Component {
+class HallAdd extends Component {
     state = {
-        // сообщение об ошибке
         alert: null,
     };
 
     showErrorAlert = (error) => {
         this.setState(prevState => {
             let newState = {...prevState};
-            newState.alert = {type: 'danger', message: `Movie was not added!`};
+            newState.alert = {type: 'danger', message: `Hall was not added!`};
             return newState;
         });
     };
 
-    gatherFormData = (movie) => {
+    gatherFormData = (hall) => {
         let formData = new FormData();
-        Object.keys(movie).forEach(key => {
-            const value = movie[key];
+        Object.keys(hall).forEach(key => {
+            const value = hall[key];
             if (value) {
-                if(Array.isArray(value)) {
-                    value.forEach(item => formData.append(key, item));
-                } else {
-                    formData.append(key, value);
-                }
+                formData.append(key, value);
             }
         });
         return formData;
     };
 
-    formSubmitted = (movie) => {
-        const formData = this.gatherFormData(movie);
-        return axios.post('movies/', formData, {
+    formSubmitted = (hall) => {
+        const formData = this.gatherFormData(hall);
+        return axios.post('halls/', formData, {
             headers: {'Content-Type': 'multipart/form-data'}
         })
             .then(response => {
-                const movie = response.data;
-                console.log(movie);
-                this.props.history.replace('/movies/' + movie.id);
+                const hall = response.data;
+                console.log(hall);
+                this.props.history.replace('/halls/' + hall.id);
             })
             .catch(error => {
                 console.log(error);
@@ -53,10 +48,10 @@ class ItemAdd extends Component {
         const alert = this.state.alert;
         return <div>
             {alert ? <div className={"mb-2 alert alert-" + alert.type}>{alert.message}</div> : null}
-            <MovieForm onSubmit={this.formSubmitted}/>
+            <HallForm onSubmit={this.formSubmitted}/>
         </div>
     }
 }
 
 
-export default ItemAdd;
+export default HallAdd;

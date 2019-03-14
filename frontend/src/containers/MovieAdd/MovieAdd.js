@@ -1,30 +1,12 @@
-import React, {Component} from 'react'
-import axios from "axios";
-import MovieForm from "../../components/MovieForm/MovieForm";
+import React, {Component} from 'react';
+import axios from 'axios';
+import MovieForm from '../../components/MovieForm/MovieForm';
 
 
-class EditItem extends Component {
+class MovieAdd extends Component {
     state = {
-        movie: null,
         alert: null,
     };
-
-    componentDidMount() {
-        axios.get('movies/' + this.props.match.params.id)
-            .then(response => {
-                const movie = response.data;
-                console.log(movie);
-                this.setState(prevState => {
-                    const newState = {...prevState};
-                    newState.movie = movie;
-                    return newState;
-                });
-            })
-            .catch(error => {
-                console.log(error);
-                console.log(error.response);
-            });
-    }
 
     showErrorAlert = (error) => {
         this.setState(prevState => {
@@ -51,7 +33,7 @@ class EditItem extends Component {
 
     formSubmitted = (movie) => {
         const formData = this.gatherFormData(movie);
-        return axios.put('movies/' + this.props.match.params.id + '/', formData, {
+        return axios.post('movies/', formData, {
             headers: {'Content-Type': 'multipart/form-data'}
         })
             .then(response => {
@@ -67,13 +49,13 @@ class EditItem extends Component {
     };
 
     render() {
-        const {alert, movie} = this.state;
+        const alert = this.state.alert;
         return <div>
             {alert ? <div className={"mb-2 alert alert-" + alert.type}>{alert.message}</div> : null}
-            <MovieForm onSubmit={this.formSubmitted} movie={movie}/>
+            <MovieForm onSubmit={this.formSubmitted}/>
         </div>
     }
 }
 
 
-export default EditItem;
+export default MovieAdd;

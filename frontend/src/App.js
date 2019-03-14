@@ -3,10 +3,11 @@ import { Route, Switch, BrowserRouter } from 'react-router-dom';
 import './App.css';
 import AllMovies from './containers/AllMovies/AllMovies';
 import SelectedMovie from './containers/SelectedMovie/SelectedMovie';
-import ItemAdd from './containers/ItemAdd/ItemAdd';
-import EditItem from './containers/EditItem/EditItem';
+import MovieAdd from './containers/MovieAdd/MovieAdd';
+import EditMovie from './containers/EditMovie/EditMovie';
 import AllHalls from './containers/AllHalls/AllHalls';
 import SelectedHall from './containers/SelectedHall/SelectedHall';
+import HallAdd from './containers/HallAdd/HallAdd';
 import Layout from "./Layout";
 
 class App extends Component {
@@ -16,10 +17,11 @@ class App extends Component {
                 <BrowserRouter>
                     <Layout>
                         <Switch>
+                            <Route path="/halls/add" component={HallAdd}/>
                             <Route path="/halls/:id" component={SelectedHall}/>
                             <Route path="/halls" exact component={AllHalls}/>
-                            <Route path="/movies/:id/edit" component={EditItem}/>
-                            <Route path="/movies/add" component={ItemAdd}/>
+                            <Route path="/movies/:id/edit" component={EditMovie}/>
+                            <Route path="/movies/add" component={MovieAdd}/>
                             <Route path="/movies/:id" component={SelectedMovie}/>
                             <Route path="/" exact component={AllMovies}/>
                         </Switch>
