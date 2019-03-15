@@ -11,6 +11,7 @@ class SelectedMovie extends Component {
 
     getInfo = (id) => {
         axios.get('halls/' + id).then(response => {
+            console.log();
             return response.data;})
             .then(selectedHall => {this.setState({selectedHall});})
             .catch(error => {console.log(error);});

@@ -18,12 +18,12 @@ class App extends Component {
                 <BrowserRouter>
                     <Layout>
                         <Switch>
-                            <Route path="/halls/:id/edit" component={HallEdit}/>
                             <Route path="/halls/add" component={HallAdd}/>
+                            <Route path="/halls/:id/edit" component={HallEdit}/>
                             <Route path="/halls/:id" component={SelectedHall}/>
                             <Route path="/halls" exact component={AllHalls}/>
-                            <Route path="/movies/:id/edit" component={EditMovie}/>
                             <Route path="/movies/add" component={MovieAdd}/>
+                            <Route path="/movies/:id/edit" component={EditMovie}/>
                             <Route path="/movies/:id" component={SelectedMovie}/>
                             <Route path="/" exact component={AllMovies}/>
                         </Switch>
