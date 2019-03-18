@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import GetList from '../../components/GetList/GetList';
-import {NavLink} from "react-router-dom";
 import axios from 'axios';
 
 
@@ -31,7 +30,6 @@ class AllMovies extends Component {
     render() {
         return (
             <div className='AllMovies'>
-                <div><NavLink to='/movies/add' className='btn btn-outline-warning w-25 mb-3 float-right'>Добавить фильм</NavLink></div>
                 <GetList
                     name={'movies'}
                     list={this.state.allMovies}

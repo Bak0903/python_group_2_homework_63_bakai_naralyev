@@ -25,15 +25,20 @@ class SelectedMovie extends Component {
                     categories: [...genre]
                 }));
         });
+        const showsUrl = this.composeUrl(id);
+        this.getShows(showsUrl);
+    };
 
+    composeUrl = (id) => {
         const date1 = new Date();
         const date2 = new Date();
         date2.setDate(date1.getDate()+3);
-
         const start = date1.toISOString().slice(0, 10);
         const end = date2.toISOString().slice(0, 10);
-        const showsUrl = 'shows/?movie_id=' + id + '&starts_after=' + start + '&starts_before=' + end;
+        return 'shows/?movie_id=' + id + '&starts_after=' + start + '&starts_before=' + end;
+    };
 
+    getShows = (showsUrl) => {
         axios.get(showsUrl).then(response => {
             console.log(response.data);
             return response.data;})
