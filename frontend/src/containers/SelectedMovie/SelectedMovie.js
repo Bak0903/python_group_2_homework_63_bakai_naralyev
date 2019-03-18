@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
 import {NavLink} from "react-router-dom";
 import axios from 'axios';
+import ShowSchedule from "../../components/ShowSchedule/ShowSchedule";
 
 
 class SelectedMovie extends Component {
 
     state = {
         selectedMovie: [],
-        categories: []
+        categories: [],
+        shows: []
     };
 
     getInfo = (id) => {
@@ -22,7 +24,21 @@ class SelectedMovie extends Component {
                     selectedMovie: response.data,
                     categories: [...genre]
                 }));
-        })
+        });
+
+        const date1 = new Date();
+        const date2 = new Date();
+        date2.setDate(date1.getDate()+3);
+
+        const start = date1.toISOString().slice(0, 10);
+        const end = date2.toISOString().slice(0, 10);
+        const showsUrl = 'shows/?movie_id=' + id + '&starts_after=' + start + '&starts_before=' + end;
+
+        axios.get(showsUrl).then(response => {
+            console.log(response.data);
+            return response.data;})
+            .then(shows => {this.setState({shows});})
+            .catch(error => {console.log(error);});
     };
 
     deleteMovie = (id) => {
@@ -60,6 +76,7 @@ class SelectedMovie extends Component {
                         className="btn btn-secondary w-25 float-right ml-2 mr-2"
                     >Редактировать</NavLink>
                 </div>
+                {this.state.shows ? <ShowSchedule shows={this.state.shows}/> : null}
             </div>
         );
     }

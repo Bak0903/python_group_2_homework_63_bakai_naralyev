@@ -24,7 +24,6 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class MovieSerializer(serializers.ModelSerializer):
     url = serializers.HyperlinkedIdentityField(view_name='api_v1:movie-detail')
-    # genre = InlineCategorySerializer(many=True)
 
     class Meta:
         model = Movie
@@ -52,10 +51,14 @@ class ShowSerializer(serializers.ModelSerializer):
     url = serializers.HyperlinkedIdentityField(view_name='api_v1:show-detail')
     film_url = serializers.HyperlinkedRelatedField(view_name='api_v1:movie-detail', source='film', read_only=True)
     hall_url = serializers.HyperlinkedRelatedField(view_name='api_v1:hall-detail', source='hall', read_only=True)
+    hall_name = serializers.SerializerMethodField(read_only=True, source='hall')
+
+    def get_hall_name(self, show):
+        return show.hall.name
 
     class Meta:
         model = Show
-        fields = ('url', 'id', 'film', 'film_url', 'hall', 'hall_url', 'start', 'finish', 'price')
+        fields = ('url', 'id', 'film', 'film_url', 'hall', 'hall_url', 'start', 'finish', 'price', 'hall_name')
 
 
 class DiscountSerializer(serializers.ModelSerializer):
