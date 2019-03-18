@@ -1,24 +1,29 @@
-import React from 'react';
+import React, {Component} from 'react';
+import Show from '../Show/Show';
 
 
-const formatDate = (dateString) => {
-    return dateString.slice(0, 10) + ' ' + dateString.slice(12, 19);
-};
+class ShowSchedule extends Component {
 
-const ShowSchedule = props => {
-    return <div className="mt-4">
-        <h2 className='text-justify'>Расписание показов</h2>
-        {props.shows.map(show => {
-            return <p
-                className='text-justify'
-                key={show.id}>{formatDate(show.start)},
-                {props.show ? <span> {show.hall_name}, </span> : null}
-                {props.movie ? <span> {show.film_name}, </span> : null}
-                {show.price} c.
-            </p>
-        })}
-    </div>
-};
+    formatDate = (dateString) => {
+        return dateString.slice(0, 10) + ' ' + dateString.slice(11, 19);
+    };
+
+    render() {
+        return <div className="list-group text-center mt-5 ml-auto mr-auto w-50">
+            <h2>Расписание показов</h2>
+            {this.props.shows.map(item => {return (
+                <Show
+                    start = {this.formatDate(item.start)}
+                    hall = {this.props.hall}
+                    hall_name = {item.hall_name}
+                    movie = {this.props.movie}
+                    film_name = {item.film_name}
+                    price = {item.price}
+                />
+            )})}
+        </div>
+    }
+}
 
 
 export default ShowSchedule;
