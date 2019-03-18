@@ -1,8 +1,8 @@
-from django.shortcuts import render
 from webapp.models import Movie, Category, Hall, Seat, Show, Discount, Ticket, Reservation
 from rest_framework import viewsets
 from api_v1.serializers import  MovieSerializer, CategorySerializer, HallSerializer, SeatSerializer, ShowSerializer,\
                                 DiscountSerializer, TicketSerializer, ReservationSerializer
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 class NoAuthModelViewSet(viewsets.ModelViewSet):
@@ -30,6 +30,7 @@ class SeatViewSet(NoAuthModelViewSet):
 
 
 class ShowViewSet(NoAuthModelViewSet):
+    filter_backends = (DjangoFilterBackend,)
     queryset = Show.objects.all()
     serializer_class = ShowSerializer
 
@@ -43,7 +44,7 @@ class ShowViewSet(NoAuthModelViewSet):
         if movie_id:
             queryset = queryset.filter(film_id=movie_id)
         if hall_id:
-            queryset = queryset.filter(hall_id=hall_id)
+            queryset = queryset.filter(hall_id=hall_id).order_by('hall')
         if starts_after:
             queryset = queryset.filter(start__gte=starts_after)
         if starts_before:
