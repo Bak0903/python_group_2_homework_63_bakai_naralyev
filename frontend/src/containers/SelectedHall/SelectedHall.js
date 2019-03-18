@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {NavLink} from "react-router-dom";
+import ShowSchedule from "../../components/ShowSchedule/ShowSchedule";
 import axios from 'axios';
 
 
@@ -7,6 +8,7 @@ class SelectedMovie extends Component {
 
     state = {
         selectedHall: [],
+        shows: []
     };
 
     getInfo = (id) => {
@@ -15,8 +17,27 @@ class SelectedMovie extends Component {
             return response.data;})
             .then(selectedHall => {this.setState({selectedHall});})
             .catch(error => {console.log(error);});
+
+        const showsUrl = this.composeUrl(id);
+        this.getShows(showsUrl)
     };
 
+
+    composeUrl = (id) => {
+        const date1 = new Date();
+        const date2 = new Date();
+        date2.setDate(date1.getDate()+3);
+        const start = date1.toISOString().slice(0, 10);
+        const end = date2.toISOString().slice(0, 10);
+        return 'shows/?hall_id=' + id + '&starts_after=' + start + '&starts_before=' + end;
+    };
+
+    getShows = (showsUrl) => {
+        axios.get(showsUrl).then(response => {
+            return response.data;})
+            .then(shows => {this.setState({shows});})
+            .catch(error => {console.log(error);});
+    };
     deleteHall = (id) => {
         axios.delete('halls/' + id).then(this.props.history.replace('/halls/'))
     };
@@ -43,6 +64,7 @@ class SelectedMovie extends Component {
                         className="btn btn-secondary w-25 float-right ml-2 mr-2"
                     >Редактировать</NavLink>
                 </div>
+                {this.state.shows ? <ShowSchedule shows={this.state.shows} movie={true} hall={false}/> : null}
             </div>
         );
     }

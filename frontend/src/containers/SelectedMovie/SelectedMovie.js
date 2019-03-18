@@ -40,7 +40,6 @@ class SelectedMovie extends Component {
 
     getShows = (showsUrl) => {
         axios.get(showsUrl).then(response => {
-            console.log(response.data);
             return response.data;})
             .then(shows => {this.setState({shows});})
             .catch(error => {console.log(error);});
@@ -81,7 +80,7 @@ class SelectedMovie extends Component {
                         className="btn btn-secondary w-25 float-right ml-2 mr-2"
                     >Редактировать</NavLink>
                 </div>
-                {this.state.shows ? <ShowSchedule shows={this.state.shows}/> : null}
+                {this.state.shows ? <ShowSchedule shows={this.state.shows} hall={true} movie={false}/> : null}
             </div>
         );
     }
