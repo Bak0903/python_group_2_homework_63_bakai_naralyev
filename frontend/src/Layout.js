@@ -11,6 +11,9 @@ class Layout extends Component {
                 <div><NavLink to='/movies/add' className='btn btn-warning float-right mr-2'>Добавить фильм</NavLink></div>
                 <div><NavLink to='/' className="btn btn-dark float-left mr-2">Фильмы</NavLink></div>
                 <div><NavLink to='/halls' className="btn btn-dark float-left  mr-2">Залы</NavLink></div>
+                {localStorage.getItem('auth-token')
+                    ? <div><NavLink className='btn btn-warning float-right mr-2' to="/logout">Выйти</NavLink></div>
+                    : <div><NavLink className='btn btn-warning float-right mr-2' to="/login">Войти</NavLink></div>}
             </div>
             <div>
                 {this.props.children}
