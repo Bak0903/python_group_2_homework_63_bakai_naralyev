@@ -52,7 +52,10 @@ class EditMovie extends Component {
     formSubmitted = (movie) => {
         const formData = this.gatherFormData(movie);
         return axios.put('movies/' + this.props.match.params.id + '/', formData, {
-            headers: {'Content-Type': 'multipart/form-data'}
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'Authorization': 'Token ' + localStorage.getItem('auth-token')
+            }
         })
             .then(response => {
                 const movie = response.data;
