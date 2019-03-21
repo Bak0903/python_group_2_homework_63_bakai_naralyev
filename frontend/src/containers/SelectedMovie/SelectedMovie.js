@@ -46,7 +46,12 @@ class SelectedMovie extends Component {
     };
 
     deleteMovie = (id) => {
-        axios.delete('movies/' + id).then(this.props.history.replace('/'))
+        axios.delete('movies/' + id, {
+            headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Token ' + localStorage.getItem('auth-token')
+            }
+        }).then(this.props.history.replace('/'))
     };
 
     componentDidMount() {
@@ -71,10 +76,13 @@ class SelectedMovie extends Component {
                     </blockquote>
                 </div>
                 <div>
-                    <button
+                    {localStorage.getItem('auth-token')
+                    ? <div><button
                         className="btn btn-danger w-25 float-right ml-2 mr-2"
                         onClick={() => this.deleteMovie(id)}
-                        >Удалить</button>
+                        >Удалить</button></div>
+                    : <div><NavLink className="btn btn-danger w-25 float-right ml-2 mr-2" to="/login">Удалить</NavLink></div>}
+
                     <NavLink
                         to={'/movies/' + id + '/edit'}
                         className="btn btn-secondary w-25 float-right ml-2 mr-2"
