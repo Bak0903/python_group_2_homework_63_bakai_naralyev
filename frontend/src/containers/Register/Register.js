@@ -25,7 +25,10 @@ class Register extends Component {
         if (this.passwordsMatch()) {
             const data = {
                 username: this.state.user.username,
-                password: this.state.user.password
+                password: this.state.user.password,
+                first_name: this.state.user.first_name,
+                last_name: this.state.user.last_name,
+                email: this.state.user.email
             };
             return axios.post('register/', data).then(response => {
                 console.log(response);
