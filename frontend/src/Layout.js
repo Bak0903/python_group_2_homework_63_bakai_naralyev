@@ -5,6 +5,8 @@ import './Layout.css';
 
 class Layout extends Component {
     render() {
+        const username = localStorage.getItem('username');
+        const isAdmin = localStorage.getItem('is_admin');
         return <div className='App'>
             <div className='mb-2 col-12 clearfix bg-info p-2'>
                 {localStorage.getItem('auth-token')

@@ -7,7 +7,10 @@ class Register extends Component {
         user: {
             'username': '',
             'password': '',
-            'passwordConfirm': ''
+            'passwordConfirm': '',
+            'first_name': '',
+            'last_name': '',
+            'email': ''
         },
         errors: {}
     };
@@ -67,16 +70,34 @@ class Register extends Component {
     };
 
     render() {
-        const {username, password, passwordConfirm} = this.state.user;
+        const {username, password, passwordConfirm, first_name, last_name, email} = this.state.user;
         return <Fragment>
             <h2>Регистрация</h2>
             <form onSubmit={this.formSubmitted}>
                 {this.showErrors('non_field_errors')}
                 <div className="form-row">
-                    <label className="font-weight-bold">Имя пользователя</label>
+                    <label className="font-weight-bold">Логин</label>
                     <input type="text" className="form-control" name="username" value={username}
                            onChange={this.inputChanged}/>
                     {this.showErrors('username')}
+                </div>
+                <div className="form-row">
+                    <label className="font-weight-bold">Имя</label>
+                    <input type="text" className="form-control" name="first_name" value={first_name}
+                           onChange={this.inputChanged}/>
+                    {this.showErrors('first_name')}
+                </div>
+                <div className="form-row">
+                    <label className="font-weight-bold">Фамилия</label>
+                    <input type="text" className="form-control" name="last_name" value={last_name}
+                           onChange={this.inputChanged}/>
+                    {this.showErrors('last_name')}
+                </div>
+                <div className="form-row">
+                    <label className="font-weight-bold">Электронная почта</label>
+                    <input type="email" className="form-control" name="email" value={email}
+                           onChange={this.inputChanged}/>
+                    {this.showErrors('email')}
                 </div>
                 <div className="form-row">
                     <label className="font-weight-bold">Пароль</label>
