@@ -20,6 +20,44 @@ class Register extends Component {
         return password === passwordConfirm
     };
 
+
+    performLogin = (username, password) => {
+        axios.post('login/', {username, password}).then(response => {
+            console.log(response);
+            localStorage.setItem('auth-token', response.data.token);
+            localStorage.setItem('username', response.data.username);
+            localStorage.setItem('first_name', response.data.first_name);
+            localStorage.setItem('last_name', response.data.last_name);
+            localStorage.setItem('email', response.data.email);
+            this.props.history.replace('/user/');
+        }).catch(error => {
+            console.log(error);
+            console.log(error.response);
+            this.props.history.replace({
+                pathname: '/login/',
+                state: {next: '/'}
+            });
+        })
+    };
+
+    // formSubmitted = (event) => {
+    //     event.preventDefault();
+    //     const {passwordConfirm, ...restData} = this.state.user;
+    //     const {username, password} = this.state.user;
+    //     return axios.post(REGISTER_URL, restData).then(response => {
+    //         console.log(response);
+    //         this.performLogin(username, password);
+    //     }).catch(error => {
+    //         console.log(error);
+    //         console.log(error.response);
+    //         this.setState({
+    //             ...this.state,
+    //             errors: error.response.data
+    //         })
+    //     });
+    // };
+
+
     formSubmitted = (event) => {
         event.preventDefault();
         if (this.passwordsMatch()) {
@@ -32,10 +70,7 @@ class Register extends Component {
             };
             return axios.post('register/', data).then(response => {
                 console.log(response);
-                this.props.history.push({
-                    pathname: '/login/',
-                    state: {next: '/'}
-                });
+                this.performLogin(data.username, data.password);
             }).catch(error => {
                 console.log(error);
                 console.log(error.response);

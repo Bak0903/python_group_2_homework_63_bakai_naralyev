@@ -6,18 +6,27 @@ import './Layout.css';
 class Layout extends Component {
     render() {
         const username = localStorage.getItem('username');
-        const isAdmin = localStorage.getItem('is_admin');
         return <div className='App'>
-            <div className='mb-2 col-12 clearfix bg-info p-2'>
-                {localStorage.getItem('auth-token')
-                    ? <div><NavLink className='btn btn-danger float-left mr-2' to="/logout">Выйти</NavLink></div>
-                    : [<div><NavLink className='btn btn-danger float-left mr-2' to="/login">Войти</NavLink></div>,
-                        <div><NavLink className='btn btn-danger float-left mr-2' to="/register">Регистрация</NavLink></div>
+            <div className='d-flex justify-content-between col-12 mb-2 bg-info p-2'>
+                <div className='d-flex'>
+                    <NavLink to='/' className="myButton">Фильмы</NavLink>
+                    <NavLink to='/halls' className="myButton">Залы</NavLink>
+                </div>
+                <div className='d-flex'>
+                    <NavLink to='/halls/add' className='myButton'>Добавить зал</NavLink>
+                    <NavLink to='/movies/add' className='myButton'>Добавить фильм</NavLink>
+                </div>
+
+                <div className='d-flex'>
+                  {localStorage.getItem('auth-token')
+                    ? <div key='exit' className='d-flex'>
+                          <span>Привет, <NavLink className='link' to='/user'>{username}</NavLink></span>
+                          <NavLink className='myButton' to="/logout">Выйти</NavLink>
+                      </div>
+                    : [<div key='enter'><NavLink className='myButton' to="/login">Войти</NavLink></div>,
+                        <div key='register'>><NavLink className='myButton' to="/register">Регистрация</NavLink></div>
                     ]}
-                <div><NavLink to='/halls/add' className='btn btn-warning float-right mr-2'>Добавить зал</NavLink></div>
-                <div><NavLink to='/movies/add' className='btn btn-warning float-right mr-2'>Добавить фильм</NavLink></div>
-                <div><NavLink to='/' className="btn btn-dark float-left mr-2">Фильмы</NavLink></div>
-                <div><NavLink to='/halls' className="btn btn-dark float-left  mr-2">Залы</NavLink></div>
+                </div>
             </div>
             <div>
                 {this.props.children}

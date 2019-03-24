@@ -14,6 +14,7 @@ import Login from "./containers/Login/Login";
 import Logout from "./containers/Logout/Logout";
 import AuthRoute from "./components/AuthRoute/AuthRoute";
 import Register from './containers/Register/Register';
+import PersonalPage from './containers/PersonalPage/PersonalPage';
 
 
 
@@ -24,6 +25,7 @@ class App extends Component {
                 <BrowserRouter>
                     <Layout>
                         <Switch>
+                            <Route path="/user" component={PersonalPage}/>
                             <Route path="/register" component={Register}/>
                             <Route path="/login" component={Login}/>
                             <Route path="/logout" component={Logout}/>
