@@ -140,7 +140,7 @@ class Register extends Component {
                 <div className="form-row">
                     <label className="font-weight-bold">Пароль</label>
                     <input type="password" className="form-control" name="password" value={password}
-                           onChange={this.inputChanged}/>
+                           onChange={this.inputChanged} onCopy={event => event.preventDefault()}/>
                     {this.showErrors('password')}
                 </div>
                 <div className="form-row">

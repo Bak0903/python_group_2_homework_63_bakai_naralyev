@@ -9,7 +9,6 @@ class PersonalPage extends Component {
         const username = localStorage.getItem('username');
         console.log(username, first_name, last_name, email);
         return <Fragment>
-
         </Fragment>
     }
 }

@@ -62,7 +62,6 @@ class SeatViewSet(BaseViewSet):
 
 
 class ShowViewSet(BaseViewSet):
-
     queryset = Show.objects.all()
     serializer_class = ShowSerializer
 
