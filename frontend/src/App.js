@@ -13,6 +13,8 @@ import Layout from "./Layout";
 import Login from "./containers/Login/Login";
 import Logout from "./containers/Logout/Logout";
 import AuthRoute from "./components/AuthRoute/AuthRoute";
+import Register from './containers/Register/Register';
+
 
 
 class App extends Component {
@@ -22,6 +24,7 @@ class App extends Component {
                 <BrowserRouter>
                     <Layout>
                         <Switch>
+                            <Route path="/register" component={Register}/>
                             <Route path="/login" component={Login}/>
                             <Route path="/logout" component={Logout}/>
                             <AuthRoute path="/halls/add" component={HallAdd}/>
