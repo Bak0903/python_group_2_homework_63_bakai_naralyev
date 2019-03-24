@@ -3,7 +3,7 @@ from rest_framework import viewsets
 from api_v1.serializers import  MovieSerializer, CategorySerializer, HallSerializer, SeatSerializer, ShowSerializer,\
                                 DiscountSerializer, TicketSerializer, ReservationSerializer, UserSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from rest_framework.generics import CreateAPIView
+from rest_framework.generics import CreateAPIView, UpdateAPIView
 from django.contrib.auth.models import User
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.response import Response
@@ -19,6 +19,7 @@ class LoginView(ObtainAuthToken):
         token, created = Token.objects.get_or_create(user=user)
         return Response({
             'token': token.key,
+            'id': user.id,
             'username': user.username,
             'first_name': user.first_name,
             'last_name': user.last_name,
@@ -30,6 +31,11 @@ class UserCreateView(CreateAPIView):
     model = User
     serializer_class = UserSerializer
     permission_classes = [AllowAny]
+
+
+class UserUpdateView(UpdateAPIView):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
 
 
 class BaseViewSet(viewsets.ModelViewSet):

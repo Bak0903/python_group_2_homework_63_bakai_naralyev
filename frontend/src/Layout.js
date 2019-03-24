@@ -23,8 +23,8 @@ class Layout extends Component {
                           <span>Привет, <NavLink className='link' to='/user'>{username}</NavLink></span>
                           <NavLink className='myButton' to="/logout">Выйти</NavLink>
                       </div>
-                    : [<NavLink className='myButton' to="/login">Войти</NavLink>,
-                        <NavLink className='myButton' to="/register">Регистрация</NavLink>
+                    : [<NavLink key='enter' className='myButton' to="/login">Войти</NavLink>,
+                        <NavLink key='register' className='myButton' to="/register">Регистрация</NavLink>
                     ]}
                 </div>
             </div>

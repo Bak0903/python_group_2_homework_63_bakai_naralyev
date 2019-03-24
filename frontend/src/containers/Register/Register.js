@@ -24,6 +24,7 @@ class Register extends Component {
     performLogin = (username, password) => {
         axios.post('login/', {username, password}).then(response => {
             console.log(response);
+            localStorage.setItem('id', response.data.id);
             localStorage.setItem('auth-token', response.data.token);
             localStorage.setItem('username', response.data.username);
             localStorage.setItem('first_name', response.data.first_name);
@@ -39,24 +40,6 @@ class Register extends Component {
             });
         })
     };
-
-    // formSubmitted = (event) => {
-    //     event.preventDefault();
-    //     const {passwordConfirm, ...restData} = this.state.user;
-    //     const {username, password} = this.state.user;
-    //     return axios.post(REGISTER_URL, restData).then(response => {
-    //         console.log(response);
-    //         this.performLogin(username, password);
-    //     }).catch(error => {
-    //         console.log(error);
-    //         console.log(error.response);
-    //         this.setState({
-    //             ...this.state,
-    //             errors: error.response.data
-    //         })
-    //     });
-    // };
-
 
     formSubmitted = (event) => {
         event.preventDefault();

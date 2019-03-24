@@ -100,13 +100,12 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
-    def update(self, instans, validated_data):
-        password = validated_data.pop('password')
-        username = validated_data.get('username')
-        user = User.__getitem__(username)
-        user.set_password(password)
-        user.save()
-        return user
+    def update(self, instance, validated_data):
+        instance.email = validated_data.get('email', instance.email)
+        instance.first_name = validated_data.get('first_name', instance.first_name)
+        instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.save()
+        return instance
 
     class Meta:
         model = User
