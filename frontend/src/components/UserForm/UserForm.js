@@ -39,6 +39,7 @@ class UserForm extends Component {
         let formData = new FormData();
         Object.keys(this.state.user).forEach(key => {
             const value = this.state.user[key];
+            console.log(value);
             if (value) {
                 if(Array.isArray(value)) {
                     value.forEach(item => formData.append(key, item));
@@ -54,7 +55,7 @@ class UserForm extends Component {
         event.preventDefault();
         if (this.passwordsMatch()) {
             const formData = this.gatherFormData();
-            axios.put('user/' + this.state.user.id + '/edit/', formData, {
+            axios.patch('user/' + this.state.user.id + '/edit/', formData, {
             headers: {
             'Content-Type': 'multipart/form-data',
             'Authorization': 'Token ' + localStorage.getItem('auth-token')
