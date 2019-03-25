@@ -23,7 +23,13 @@ class UserForm extends Component {
         }
     }
 
-    performLogin = () => {
+    passwordsMatch = () => {
+        const {password, passwordConfirm} = this.state.user;
+        console.log(password, passwordConfirm);
+        return password === passwordConfirm
+    };
+
+    updateLocalStorage = () => {
         localStorage.setItem('first_name', this.state.user.first_name);
         localStorage.setItem('last_name', this.state.user.last_name);
         localStorage.setItem('email', this.state.user.email);
@@ -46,21 +52,32 @@ class UserForm extends Component {
 
     formSubmitted = (event) => {
         event.preventDefault();
-        const formData = this.gatherFormData();
-        axios.put('user/' + this.state.user.id + '/edit/', formData, {
-        headers: {
-        'Content-Type': 'multipart/form-data',
-        'Authorization': 'Token ' + localStorage.getItem('auth-token')
-        }}).then(response => {
-            console.log(response);
-            this.performLogin();
-        }).catch(error => {
-            console.log(error);
+        if (this.passwordsMatch()) {
+            const formData = this.gatherFormData();
+            axios.put('user/' + this.state.user.id + '/edit/', formData, {
+            headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': 'Token ' + localStorage.getItem('auth-token')
+            }}).then(response => {
+                console.log(response);
+                this.updateLocalStorage();
+            }).catch(error => {
+                console.log(error);
+                this.setState({
+                    ...this.state,
+                    errors: error
+                })
+            });
+        }
+        else {
             this.setState({
                 ...this.state,
-                errors: error
+                errors: {
+                    ...this.state.errors,
+                    passwordConfirm: ['Passwords do not match']
+                }
             })
-        });
+        }
     };
 
     inputChanged = (event) => {
@@ -81,7 +98,7 @@ class UserForm extends Component {
     };
 
     render() {
-        const {first_name, last_name, email} = this.state.user;
+        const {first_name, last_name, email, password, passwordConfirm} = this.state.user;
         return <Fragment>
             <h2>Регистрация</h2>
             <form onSubmit={this.formSubmitted}>
@@ -103,6 +120,18 @@ class UserForm extends Component {
                     <input type="email" className="form-control" name="email" value={email}
                            onChange={this.inputChanged}/>
                     {this.showErrors('email')}
+                </div>
+                <div className="form-row">
+                    <label className="font-weight-bold">Новый пароль</label>
+                    <input type="password" className="form-control" name="password" value={password}
+                           onChange={this.inputChanged} onCopy={event => event.preventDefault()}/>
+                    {this.showErrors('password')}
+                </div>
+                <div className="form-row">
+                    <label className="font-weight-bold">Подтверждение нового пароля</label>
+                    <input type="password" className="form-control" name="passwordConfirm" value={passwordConfirm}
+                           onChange={this.inputChanged}/>
+                    {this.showErrors('passwordConfirm')}
                 </div>
                 <button type="submit" className="btn btn-primary mt-2">Сохранить</button>
             </form>

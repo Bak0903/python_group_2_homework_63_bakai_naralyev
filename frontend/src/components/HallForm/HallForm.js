@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 
 
 class HallForm extends Component {
@@ -15,11 +15,6 @@ class HallForm extends Component {
             this.state.hall= this.props.hall;
         }
     }
-
-    componentDidMount() {
-        console.log(this.props.hall);
-    }
-
 
     disableSubmit = () => {
         this.setState(prevState => {
@@ -63,12 +58,12 @@ class HallForm extends Component {
     };
 
     render() {
+        const name = this.state.hall.name;
+        const submitEnabled = this.state.submitEnabled;
         if (this.state.hall) {
-            const name = this.state.hall.name;
-            const submitEnabled = this.state.submitEnabled;
-            return <div className="mt-3">
+            return <Fragment>
                 {alert}
-                <form onSubmit={this.formSubmitted}>
+                <form className="mt-3" onSubmit={this.formSubmitted}>
                     <div className="form-group">
                         <label className="font-weight-bold">Название</label>
                         <input type="text" className="form-control" name="name" value={name}
@@ -78,7 +73,7 @@ class HallForm extends Component {
                             className="btn btn-primary">Сохранить
                     </button>
                 </form>
-            </div>;
+            </Fragment>;
         }
         else return null;
     }

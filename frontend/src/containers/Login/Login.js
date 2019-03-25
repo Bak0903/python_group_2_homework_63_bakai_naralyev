@@ -14,7 +14,6 @@ class Login extends Component {
     formSubmitted = (event) => {
         event.preventDefault();
         return axios.post('login/', this.state.credentials).then(response => {
-            console.log(response);
             localStorage.setItem('id', response.data.id);
             localStorage.setItem('auth-token', response.data.token);
             localStorage.setItem('username', response.data.username);

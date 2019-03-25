@@ -37,7 +37,6 @@ class HallAdd extends Component {
         })
             .then(response => {
                 const hall = response.data;
-                console.log(hall);
                 this.props.history.replace('/halls/' + hall.id);
             })
             .catch(error => {

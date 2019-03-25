@@ -5,7 +5,6 @@ class PersonalPage extends Component {
     state = {
         user: {
             id: localStorage.getItem('id'),
-            'password': localStorage.getItem('username'),
             username: localStorage.getItem('username'),
             first_name: localStorage.getItem('first_name'),
             last_name: localStorage.getItem('last_name'),
@@ -27,7 +26,9 @@ class PersonalPage extends Component {
             <p>Фамилия: {last_name}</p>
             <p>Электронная почта: {email}</p>
             <button onClick={this.turnForm}>Редакировать</button>
-            <div className={this.state.formVisible}><UserForm user={this.state.user}/></div>
+            <div className={this.state.formVisible}>
+                <UserForm user={this.state.user}/>
+            </div>
         </Fragment>
     }
 }
