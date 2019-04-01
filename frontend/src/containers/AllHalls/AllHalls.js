@@ -1,36 +1,40 @@
 import React, {Component} from 'react';
 import GetList from '../../components/GetList/GetList';
-import axios from 'axios';
+import {connect} from "react-redux";
+import {list} from "../../store/actions/ListRequest";
 
 
 class AllMovies extends Component {
 
-    state = {
-        allHalls: {},
-    };
-
-    getAll = () => {
-        axios.get('halls').then(response => {
-            const requests = response.data;
-            return Promise.all(requests);})
-            .then(allHalls => {this.setState({allHalls});})
-            .catch(error => {console.log(error);});
-    };
-
     componentDidMount() {
-        this.getAll();
+        this.props.request('halls/');
     }
 
     render() {
-        return (
-            <div className={'AllHalls'}>
-                <GetList
-                    name={'halls'}
-                    list={this.state.allHalls}
-                />
-            </div>
-        );
+        if (this.props.list) {
+            return (
+                <div className={'AllHalls'}>
+                    <GetList
+                        name={'halls'}
+                        list={this.props.list}
+                    />
+                </div>
+            );
+        }
+        else if (this.props.errors) console.log(this.props.errors);
+        else return null;
     }
 }
 
-export default AllMovies;
+const mapStateToProps = state => {
+    return {
+        list: state.hallList.list,
+        errors: state.hallList.errors
+    }
+};
+
+const mapDispatchToProps = dispatch => ({
+    request: (url) => dispatch(list(url))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AllMovies);
