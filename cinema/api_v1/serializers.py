@@ -102,7 +102,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         if validated_data.get('password'):
-            new_password = validated_data.pop('password')
+            new_password = validated_data.get('password')
             instance.set_password(new_password)
         instance.email = validated_data.get('email', instance.email)
         instance.first_name = validated_data.get('first_name', instance.first_name)
