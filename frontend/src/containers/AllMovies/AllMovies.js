@@ -1,42 +1,40 @@
 import React, {Component} from 'react';
 import GetList from '../../components/GetList/GetList';
-import axios from 'axios';
+import {connect} from "react-redux";
+import {list} from "../../store/actions/ListRequest";
 
 
 class AllMovies extends Component {
 
-    state = {
-        allMovies: {},
-    };
-
-    getAll = () => {
-        axios.get('movies').then(response => {
-            const requests = response.data.map(movie => {
-                return {
-                    id: movie.id,
-                    poster: movie.poster,
-                    name: movie.name
-                };
-            });
-            return Promise.all(requests);})
-            .then(allMovies => {this.setState({allMovies});})
-            .catch(error => {console.log(error);});
-    };
-
     componentDidMount() {
-        this.getAll();
+        this.props.request('movies');
     }
 
     render() {
-        return (
-            <div className='AllMovies'>
-                <GetList
-                    name={'movies'}
-                    list={this.state.allMovies}
-                />
-            </div>
-        );
+        if (this.props.list) {
+            return (
+                <div className={'AllHalls'}>
+                    <GetList
+                        name={'movies'}
+                        list={this.props.list}
+                    />
+                </div>
+            );
+        }
+        else if (this.props.errors) console.log(this.props.errors);
+        else return null;
     }
 }
 
-export default AllMovies;
+const mapStateToProps = state => {
+    return {
+        list: state.movieList,
+        errors: state.errors
+    }
+};
+
+const mapDispatchToProps = dispatch => ({
+    request: (url) => dispatch(list(url))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AllMovies);

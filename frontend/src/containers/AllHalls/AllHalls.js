@@ -7,7 +7,7 @@ import {list} from "../../store/actions/ListRequest";
 class AllMovies extends Component {
 
     componentDidMount() {
-        this.props.request('halls/');
+        this.props.request('halls');
     }
 
     render() {
@@ -28,8 +28,8 @@ class AllMovies extends Component {
 
 const mapStateToProps = state => {
     return {
-        list: state.hallList.list,
-        errors: state.hallList.errors
+        list: state.hallList,
+        errors: state.errors
     }
 };
 

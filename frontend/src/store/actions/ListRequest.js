@@ -8,8 +8,8 @@ export const listRequest = () => {
     return {type: LIST_REQUEST}
 };
 
-export const listSuccess = (data) => {
-    return {type: LIST_SUCCESS, data}
+export const listSuccess = (data, url) => {
+    return {type: LIST_SUCCESS, data, url}
 };
 
 export const listError = (errors) => {
@@ -19,12 +19,12 @@ export const listError = (errors) => {
 export const list = (url) => {
     return dispatch => {
         dispatch(listRequest());
-        return axios.get(url).then(response => {
-            return dispatch(listSuccess(response.data));
+        return axios.get(url + '/').then(response => {
+            return dispatch(listSuccess(response.data, url));
         }).catch(error => {
             console.log(error);
             console.log(error.response);
-            return dispatch(listError(error.response.data));
+            return dispatch(listError(error.response));
         });
     }
 };
