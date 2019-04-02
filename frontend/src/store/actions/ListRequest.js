@@ -20,8 +20,10 @@ export const list = (url) => {
     return dispatch => {
         dispatch(listRequest());
         return axios.get(url + '/').then(response => {
+            dispatch(listRequest());
             return dispatch(listSuccess(response.data, url));
         }).catch(error => {
+            dispatch(listRequest());
             console.log(error);
             console.log(error.response);
             return dispatch(listError(error.response));
