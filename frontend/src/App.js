@@ -35,7 +35,7 @@ class App extends Component {
                             <Route path="/halls" exact component={AllItems}/>
                             <AuthRoute path="/movies/add" component={MovieAdd}/>
                             <AuthRoute path="/movies/:id/edit" component={EditMovie}/>
-                            <Route path="/movies/:id" component={SelectedMovie}/>
+                            <Route path="/movies/:id" component={SelectedHall}/>
                             <Route path="/" exact component={AllItems}/>
                         </Switch>
                     </Layout>

@@ -14,11 +14,11 @@ class ShowSchedule extends Component {
             {Object.values(this.props.shows).map(item => {return (
                 <Show
                     start = {this.formatDate(item.start)}
-                    hall = {this.props.hall}
+                    check = {this.props.check}
                     hall_name = {item.hall_name}
-                    movie = {this.props.movie}
                     film_name = {item.film_name}
                     price = {item.price}
+                    key = {this.formatDate(item.start)}
                 />
             )})}
         </div>
