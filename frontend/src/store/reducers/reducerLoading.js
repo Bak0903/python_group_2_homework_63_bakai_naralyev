@@ -1,11 +1,11 @@
-import {LIST_ERROR} from "../actions/ListRequest";
+import {REQUEST} from "../actions/actionLoading";
 
-const initialState = {};
+const initialState = false;
 
 const movieListReducer = (state = initialState, action) => {
     switch (action.type) {
-        case LIST_ERROR:
-            return action.errors;
+        case REQUEST:
+            return !state;
         default:
             return state;
     }

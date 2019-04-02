@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux';
 import listReducer from "./list";
-import errorReducer from "./errors";
-import loadingReducer from "./loading";
+import errorReducer from "./reducerError";
+import loadingReducer from "./reducerLoading";
 
 const rootReducer = combineReducers({
     lists: listReducer,

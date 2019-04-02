@@ -1,32 +1,24 @@
 import axios from "axios";
+import {catchError} from './actionError';
+import {requestStatus} from './actionLoading';
 
-export const LIST_REQUEST = "LIST_REQUEST";
 export const LIST_SUCCESS = "LIST_SUCCESS";
-export const LIST_ERROR = "LIST_ERROR";
-
-export const listRequest = () => {
-    return {type: LIST_REQUEST}
-};
 
 export const listSuccess = (data, url) => {
     return {type: LIST_SUCCESS, data, url}
 };
 
-export const listError = (errors) => {
-    return {type: LIST_ERROR, errors}
-};
-
 export const list = (url) => {
     return dispatch => {
-        dispatch(listRequest());
+        dispatch(requestStatus());
         return axios.get(url + '/').then(response => {
-            dispatch(listRequest());
+            dispatch(requestStatus());
             return dispatch(listSuccess(response.data, url));
         }).catch(error => {
-            dispatch(listRequest());
+            dispatch(requestStatus());
             console.log(error);
             console.log(error.response);
-            return dispatch(listError(error.response));
+            return dispatch(catchError(error.response.data));
         });
     }
 };
