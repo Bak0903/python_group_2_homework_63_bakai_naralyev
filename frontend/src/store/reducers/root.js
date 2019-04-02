@@ -1,12 +1,16 @@
 import {combineReducers} from 'redux';
-import listReducer from "./list";
 import errorReducer from "./reducerError";
 import loadingReducer from "./reducerLoading";
+import listReducer from "./setList";
+import itemReducer from './setItem';
+import showReducer from './setShows';
 
 const rootReducer = combineReducers({
-    lists: listReducer,
     errors: errorReducer,
-    loading: loadingReducer
+    loading: loadingReducer,
+    lists: listReducer,
+    item: itemReducer,
+    shows: showReducer,
 });
 
 export default rootReducer;

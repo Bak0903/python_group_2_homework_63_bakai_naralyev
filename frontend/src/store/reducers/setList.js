@@ -1,4 +1,4 @@
-import {LIST_SUCCESS} from "../actions/ListRequest";
+import {SUCCESS} from "../actions/actionSuccess";
 
 const initialState = {
     movies: {},
@@ -7,10 +7,11 @@ const initialState = {
 
 const listReducer = (state = initialState, action) => {
     switch (action.type) {
-        case LIST_SUCCESS:
+        case SUCCESS:
+            console.log(action.url);
             if (action.url === 'halls') return {...state, halls: action.data};
             else if (action.url === 'movies') return {...state,  movies: action.data};
-            else return null;
+            else return state;
         default:
             return state;
     }

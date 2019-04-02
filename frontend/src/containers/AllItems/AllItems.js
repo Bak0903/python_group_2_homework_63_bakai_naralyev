@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import GetList from '../../components/GetList/GetList';
 import {connect} from "react-redux";
-import {list} from "../../store/actions/ListRequest";
+import {request} from "../../store/actions/getRequest";
 
 
 class AllItems extends Component {
@@ -48,7 +48,7 @@ const mapStateToProps = (state, props) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-    request: (url) => dispatch(list(url))
+    request: (url) => dispatch(request(url))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllItems);

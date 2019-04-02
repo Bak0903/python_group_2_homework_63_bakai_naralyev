@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Show from '../Show/Show';
+import Show from './Show/Show';
 
 
 class ShowSchedule extends Component {
@@ -11,7 +11,7 @@ class ShowSchedule extends Component {
     render() {
         return <div className="list-group text-center mt-5 ml-auto mr-auto w-50">
             <h2>Расписание показов</h2>
-            {this.props.shows.map(item => {return (
+            {Object.values(this.props.shows).map(item => {return (
                 <Show
                     start = {this.formatDate(item.start)}
                     hall = {this.props.hall}
