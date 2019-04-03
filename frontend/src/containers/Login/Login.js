@@ -1,5 +1,7 @@
 import React, {Component, Fragment} from 'react';
-import axios from 'axios';
+import {login} from "../../store/actions/requests/login";
+import connect from "react-redux/es/connect/connect";
+
 
 
 class Login extends Component {
@@ -13,26 +15,16 @@ class Login extends Component {
 
     formSubmitted = (event) => {
         event.preventDefault();
-        return axios.post('login/', this.state.credentials).then(response => {
-            localStorage.setItem('id', response.data.id);
-            localStorage.setItem('auth-token', response.data.token);
-            localStorage.setItem('username', response.data.username);
-            localStorage.setItem('first_name', response.data.first_name);
-            localStorage.setItem('last_name', response.data.last_name);
-            localStorage.setItem('email', response.data.email);
-            if (this.props.location.state) {
-                this.props.history.replace(this.props.location.state.next);
-            } else {
-                this.props.history.goBack();
-            }
-        }).catch(error => {
-            console.log(error);
-            console.log(error.response);
+        const url = 'login/';
+        this.props.login(url, this.state.credentials);
+        console.log(this.props.errors);
+        if (this.props.errors) {
             this.setState({
                 ...this.state,
-                errors: error.response.data
+                errors: this.props.errors.data
             })
-        });
+        }
+        else this.props.history.replace('/');
     };
 
     inputChanged = (event) => {
@@ -76,5 +68,15 @@ class Login extends Component {
     }
 }
 
+const mapStateToProps = (state) => {
+    return {
+        errors: state.errors,
+    }
+};
 
-export default Login;
+const mapDispatchToProps = dispatch => ({
+    login: (url, loginData) => dispatch(login(url, loginData))
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

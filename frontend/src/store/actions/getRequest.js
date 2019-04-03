@@ -1,7 +1,7 @@
 import axios from "axios";
-import {catchError} from './actionError';
-import {requestStatus} from './actionLoading';
-import {successRequest} from './actionSuccess';
+import {catchError} from './statuses/actionError';
+import {requestStatus} from './statuses/actionLoading';
+import {successRequest} from './statuses/actionSuccess';
 
 
 export const request = (url) => {
