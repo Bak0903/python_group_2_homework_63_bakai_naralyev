@@ -35,10 +35,13 @@ class HallEdit extends Component {
     };
 
     render() {
-        const {alert} = this.state;
+        const errors = this.props.errors;
+        if (errors)
+            this.showErrorAlert(this.props.errors);
+        const alert = this.state.alert;
         return <div>
-            {alert ? <div className={"mb-2 alert alert-" + alert.type}>{alert.message}</div> : null}
-            <HallForm onSubmit={this.formSubmitted}/>
+                {alert ? <div className={"mb-2 alert alert-" + alert.type}>{alert.message}</div> : null}
+                <HallForm onSubmit={this.formSubmitted}/>
         </div>
     }
 }
