@@ -77,3 +77,21 @@ export const postRequest = (url, formData) => {
         });
     }
 };
+
+export const putRequest = (url, formData) => {
+    return dispatch => {
+        dispatch(requestStatus());
+        return axios.put(url, formData, {
+            headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': 'Token ' + localStorage.getItem('auth-token')
+            }
+        }).then(dispatch(requestStatus())
+        ).catch(error => {
+            dispatch(requestStatus());
+            console.log(error);
+            console.log(error.response);
+            return dispatch(catchError(error.response));
+        });
+    }
+};

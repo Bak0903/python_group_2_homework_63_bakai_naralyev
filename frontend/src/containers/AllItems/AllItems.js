@@ -10,13 +10,12 @@ class AllItems extends Component {
         this.props.request(this.props.type);
     }
 
-    shouldComponentUpdate (nextProps) {
-        if (nextProps.list !== this.props.list){
-            this.props.request(nextProps.type);
-            return true;
-        }
-        else return false;
-    }
+    // shouldComponentUpdate (nextProps) {
+    //     if (this.props.type !== nextProps.type){
+    //         return true;
+    //     }
+    //     return false
+    // }
 
     render() {
         const {loading, list, errors, type} = this.props;

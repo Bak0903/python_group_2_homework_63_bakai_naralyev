@@ -1,28 +1,13 @@
-import React, {Component} from 'react'
-import axios from "axios";
+import React, {Component} from 'react';
 import HallForm from "../../components/HallForm/HallForm";
+import {connect} from "react-redux";
+import {putRequest} from "../../store/actions/getRequest";
 
 
 class HallEdit extends Component {
     state = {
         alert: null,
     };
-
-    // componentDidMount() {
-    //     axios.get('halls/' + this.props.match.params.id)
-    //         .then(response => {
-    //             const hall = response.data;
-    //             this.setState(prevState => {
-    //                 const newState = {...prevState};
-    //                 newState.hall = hall;
-    //                 return newState;
-    //             });
-    //         })
-    //         .catch(error => {
-    //             console.log(error);
-    //             console.log(error.response);
-    //         });
-    // }
 
     showErrorAlert = (error) => {
         this.setState(prevState => {
@@ -45,22 +30,8 @@ class HallEdit extends Component {
 
     formSubmitted = (hall) => {
         const formData = this.gatherFormData(hall);
-        return axios.put('halls/' + this.props.match.params.id + '/', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-                'Authorization': 'Token ' + localStorage.getItem('auth-token')
-            }
-        })
-            .then(response => {
-                const hall = response.data;
-                console.log(hall);
-                this.props.history.replace('/halls/' + hall.id);
-            })
-            .catch(error => {
-                console.log(error);
-                console.log(error.response);
-                this.showErrorAlert(error.response);
-            });
+        const url = 'halls/' + this.props.match.params.id + '/';
+        this.props.putRequest(url, formData).then(this.props.history.replace('/halls/'));
     };
 
     render() {
@@ -73,4 +44,15 @@ class HallEdit extends Component {
 }
 
 
-export default HallEdit;
+const mapStateToProps = (state) => {
+    return {
+        errors: state.errors.response,
+    }
+};
+
+const mapDispatchToProps = dispatch => ({
+    putRequest: (url, formData) => dispatch(putRequest(url, formData))
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(HallEdit);
