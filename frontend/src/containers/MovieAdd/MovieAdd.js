@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import MovieForm from '../../components/MovieForm/MovieForm';
 import {connect} from "react-redux";
-import {postRequest} from "../../store/actions/getRequest";
+import {postRequest} from "../../store/actions/requests/post";
 
 
 class MovieAdd extends Component {

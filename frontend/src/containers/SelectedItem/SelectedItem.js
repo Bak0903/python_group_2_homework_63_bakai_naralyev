@@ -2,7 +2,9 @@ import React, {Component} from 'react';
 import {NavLink} from "react-router-dom";
 import ShowSchedule from "../../components/ShowSchedule/ShowSchedule";
 import {connect} from "react-redux";
-import {request, deleteRequest, getMovie} from "../../store/actions/getRequest";
+import {request} from "../../store/actions/requests/get";
+import {deleteRequest} from "../../store/actions/requests/delete";
+import {getMovie} from "../../store/actions/requests/getMovie";
 
 
 class SelectedItem extends Component {

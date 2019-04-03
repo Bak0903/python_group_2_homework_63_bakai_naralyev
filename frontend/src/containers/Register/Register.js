@@ -1,5 +1,6 @@
 import React, {Component, Fragment} from 'react';
-import axios from "axios";
+import {register} from "../../store/actions/requests/register";
+import connect from "react-redux/es/connect/connect";
 
 
 class Register extends Component {
@@ -20,27 +21,6 @@ class Register extends Component {
         return password === passwordConfirm
     };
 
-
-    performLogin = (username, password) => {
-        axios.post('login/', {username, password}).then(response => {
-            console.log(response);
-            localStorage.setItem('id', response.data.id);
-            localStorage.setItem('auth-token', response.data.token);
-            localStorage.setItem('username', response.data.username);
-            localStorage.setItem('first_name', response.data.first_name);
-            localStorage.setItem('last_name', response.data.last_name);
-            localStorage.setItem('email', response.data.email);
-            this.props.history.replace('/user/');
-        }).catch(error => {
-            console.log(error);
-            console.log(error.response);
-            this.props.history.replace({
-                pathname: '/login/',
-                state: {next: '/'}
-            });
-        })
-    };
-
     formSubmitted = (event) => {
         event.preventDefault();
         if (this.passwordsMatch()) {
@@ -51,17 +31,7 @@ class Register extends Component {
                 last_name: this.state.user.last_name,
                 email: this.state.user.email
             };
-            return axios.post('register/', data).then(response => {
-                console.log(response);
-                this.performLogin(data.username, data.password);
-            }).catch(error => {
-                console.log(error);
-                console.log(error.response);
-                this.setState({
-                    ...this.state,
-                    errors: error.response.data
-                })
-            });
+            return this.props.register('register/', data);
         } else {
             this.setState({
                 ...this.state,
@@ -139,4 +109,9 @@ class Register extends Component {
 }
 
 
-export default Register
+const mapDispatchToProps = dispatch => ({
+    register: (url, registerData) => dispatch(register(url, registerData))
+});
+
+
+export default connect(null, mapDispatchToProps)(Register);

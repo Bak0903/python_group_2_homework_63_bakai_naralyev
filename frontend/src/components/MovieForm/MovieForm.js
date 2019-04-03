@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import connect from "react-redux/es/connect/connect";
-import {request} from "../../store/actions/getRequest";
+import {request} from "../../store/actions/requests/get";
 
 
 class MovieForm extends Component {

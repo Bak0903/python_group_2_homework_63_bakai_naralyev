@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import HallForm from "../../components/HallForm/HallForm";
 import {connect} from "react-redux";
-import {putRequest} from "../../store/actions/getRequest";
+import {putRequest} from "../../store/actions/requests/put";
 
 
 class HallEdit extends Component {

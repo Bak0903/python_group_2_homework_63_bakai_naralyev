@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import GetList from '../../components/GetList/GetList';
 import {connect} from "react-redux";
-import {request} from "../../store/actions/getRequest";
+import {request} from "../../store/actions/requests/get";
 
 
 class AllItems extends Component {
