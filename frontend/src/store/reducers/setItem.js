@@ -2,13 +2,13 @@ import {SUCCESS} from "../actions/actionSuccess";
 
 const initialState = {
     movie: {},
-    hall: {}
+    hall: {},
+    categories: {}
 };
 
 const itemReducer = (state = initialState, action) => {
     switch (action.type) {
         case SUCCESS:
-            console.log(action.url);
             const url = action.url.substring(0, 4);
             if (url === 'hall') return {...state, hall: action.data};
             else if (url === 'movi') return {...state,  movie: action.data};

@@ -10,7 +10,6 @@ const showReducer = (state = initialState, action) => {
     switch (action.type) {
         case SUCCESS:
             const url=action.url.substring(0, 10);
-            console.log(url);
             if (url === 'shows/?hal') return {...state, hallShows: action.data};
             else if (url === 'shows/?mov') return {...state,  movieShows: action.data};
             else return state;

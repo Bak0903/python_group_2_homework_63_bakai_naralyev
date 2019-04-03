@@ -36,3 +36,28 @@ export const deleteRequest = (url) => {
         });
     }
 };
+
+export const getMovie = (url) => {
+    return dispatch => {
+        dispatch(requestStatus());
+        return axios.get(url).then(response => {
+            const categories = response.data.genre.map(element => {
+                return axios.get('categories/' + element).then(response => {
+                    return response.data.name;
+                });
+            });
+            return Promise.all(categories)
+                .then(genre => {
+                    // const info = { selectedMovie: response.data, categories: [...genre]};
+                    const info = {...response.data, categories: [...genre]};
+
+                    dispatch(requestStatus());
+                    dispatch(successRequest(info, url));
+        })}).catch(error => {
+            dispatch(requestStatus());
+            console.log(error);
+            console.log(error.response);
+            return dispatch(catchError(error.response));
+        });
+    }
+};
