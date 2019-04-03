@@ -1,4 +1,5 @@
 import React, {Component, Fragment} from 'react';
+import {connect} from "react-redux";
 
 
 class HallForm extends Component {
@@ -11,8 +12,9 @@ class HallForm extends Component {
 
             submitEnabled: true
         };
-        if(this.props.hall) {
-            this.state.hall= this.props.hall;
+        if(this.props.item.name) {
+            console.log(this.props.item.name);
+            this.state.hall.name= this.props.item.name;
         }
     }
 
@@ -35,7 +37,7 @@ class HallForm extends Component {
     updateHallState = (fieldName, value) => {
         this.setState(prevState => {
             let newState = {...prevState};
-            let hall = {...prevState.movie};
+            let hall = {...prevState.hall};
             hall[fieldName] = value;
             newState.hall= hall;
             return newState;
@@ -79,5 +81,10 @@ class HallForm extends Component {
     }
 }
 
+const mapStateToProps = (state, props) => {
+    return {
+        item: state.item.hall,
+    }
+};
 
-export default HallForm;
+export default connect(mapStateToProps)(HallForm);

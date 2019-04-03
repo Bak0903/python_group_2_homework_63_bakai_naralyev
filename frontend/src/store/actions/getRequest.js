@@ -48,12 +48,28 @@ export const getMovie = (url) => {
             });
             return Promise.all(categories)
                 .then(genre => {
-                    // const info = { selectedMovie: response.data, categories: [...genre]};
                     const info = {...response.data, categories: [...genre]};
-
                     dispatch(requestStatus());
                     dispatch(successRequest(info, url));
         })}).catch(error => {
+            dispatch(requestStatus());
+            console.log(error);
+            console.log(error.response);
+            return dispatch(catchError(error.response));
+        });
+    }
+};
+
+export const postRequest = (url, formData) => {
+    return dispatch => {
+        console.log(formData);
+        dispatch(requestStatus());
+        return axios.post(url, formData, {
+            headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': 'Token ' + localStorage.getItem('auth-token')
+            }
+        }).then(dispatch(requestStatus())).catch(error => {
             dispatch(requestStatus());
             console.log(error);
             console.log(error.response);

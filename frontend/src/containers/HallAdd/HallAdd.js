@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import axios from 'axios';
 import HallForm from '../../components/HallForm/HallForm';
+import {connect} from "react-redux";
+import {postRequest} from "../../store/actions/getRequest";
 
 
 class HallAdd extends Component {
@@ -29,31 +30,46 @@ class HallAdd extends Component {
 
     formSubmitted = (hall) => {
         const formData = this.gatherFormData(hall);
-        return axios.post('halls/', formData, {
-            headers: {
-            'Content-Type': 'multipart/form-data',
-            'Authorization': 'Token ' + localStorage.getItem('auth-token')
-            }
-        })
-            .then(response => {
-                const hall = response.data;
-                this.props.history.replace('/halls/' + hall.id);
-            })
-            .catch(error => {
-                console.log(error);
-                console.log(error.response);
-                this.showErrorAlert(error.response);
-            });
+        const url = 'halls/';
+        this.props.postRequest(url, formData);
+        // return axios.post('halls/', formData, {
+        //     headers: {
+        //     'Content-Type': 'multipart/form-data',
+        //     'Authorization': 'Token ' + localStorage.getItem('auth-token')
+        //     }
+        // })
+        //     .then(response => {
+        //         const hall = response.data;
+        //         this.props.history.replace('/halls/' + hall.id);
+        //     })
+        //     .catch(error => {
+        //         console.log(error);
+        //         console.log(error.response);
+        //         this.showErrorAlert(error.response);
+        //     });
     };
 
     render() {
+        const errors = this.props.errors;
+        if (errors)
+            this.showErrorAlert(this.props.errors);
         const alert = this.state.alert;
         return <div>
-            {alert ? <div className={"mb-2 alert alert-" + alert.type}>{alert.message}</div> : null}
-            <HallForm onSubmit={this.formSubmitted}/>
+                {alert ? <div className={"mb-2 alert alert-" + alert.type}>{alert.message}</div> : null}
+                <HallForm onSubmit={this.formSubmitted}/>
         </div>
     }
 }
 
+const mapStateToProps = (state) => {
+    return {
+        errors: state.errors.response,
+    }
+};
 
-export default HallAdd;
+const mapDispatchToProps = dispatch => ({
+    postRequest: (url, formData) => dispatch(postRequest(url, formData))
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(HallAdd);
