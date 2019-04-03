@@ -1,4 +1,4 @@
-import {CATCHERROR} from "../actions/actionError";
+import {CATCHERROR} from "../actions/statuses/actionError";
 
 const initialState = {};
 

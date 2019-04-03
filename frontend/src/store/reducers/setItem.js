@@ -1,4 +1,4 @@
-import {SUCCESS} from "../actions/actionSuccess";
+import {SUCCESS} from "../actions/statuses/actionSuccess";
 
 const initialState = {
     movie: {},
@@ -6,7 +6,7 @@ const initialState = {
     categories: {}
 };
 
-const itemReducer = (state = initialState, action) => {
+const userReducer = (state = initialState, action) => {
     switch (action.type) {
         case SUCCESS:
             const url = action.url.substring(0, 4);
@@ -18,4 +18,4 @@ const itemReducer = (state = initialState, action) => {
     }
 };
 
-export default itemReducer;
+export default userReducer;

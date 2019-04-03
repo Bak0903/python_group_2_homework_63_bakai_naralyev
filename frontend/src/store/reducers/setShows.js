@@ -1,4 +1,4 @@
-import {SUCCESS} from "../actions/actionSuccess";
+import {SUCCESS} from "../actions/statuses/actionSuccess";
 
 const initialState = {
     movieShows: {},

@@ -1,4 +1,4 @@
-import {REQUEST} from "../actions/actionLoading";
+import {REQUEST} from "../actions/statuses/actionLoading";
 
 const initialState = false;
 

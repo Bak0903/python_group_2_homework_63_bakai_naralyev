@@ -4,6 +4,7 @@ import loadingReducer from "./reducerLoading";
 import listReducer from "./setList";
 import itemReducer from './setItem';
 import showReducer from './setShows';
+import userReducer from './setUser';
 
 const rootReducer = combineReducers({
     errors: errorReducer,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
     lists: listReducer,
     item: itemReducer,
     shows: showReducer,
+    user: userReducer
 });
 
 export default rootReducer;
