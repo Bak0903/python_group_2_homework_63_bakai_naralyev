@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import axios from 'axios';
+import connect from "react-redux/es/connect/connect";
+import {request} from "../../store/actions/getRequest";
 
 
 class MovieForm extends Component {
@@ -22,19 +23,13 @@ class MovieForm extends Component {
         if(this.props.movie) {
             this.state.posterUrl = this.props.movie.poster;
             this.state.movie = this.props.movie;
+            this.state.categories = this.props.categories;
             this.state.movie.poster = null;
         }
     }
 
     componentDidMount() {
-        axios.get('categories/')
-            .then(response => {console.log(response.data); return response.data})
-            .then(categories => this.setState(prevState => {
-                let newState = {...prevState};
-                newState.categories = categories;
-                return newState;
-            }))
-            .catch(error => console.log(error));
+        this.props.request('categories');
     }
 
     disableSubmit = () => {
@@ -74,7 +69,7 @@ class MovieForm extends Component {
         const fieldName = event.target.name;
         const options = event.target.options;
         for (let i = 0; i < options.length; i++) {
-            if (options[i].selected) value.push(+options[i].value);
+            if (options[i].selected) value.push(options[i].value);
         }
         console.log(value);
         this.updateMovieState(fieldName, value);
@@ -103,8 +98,8 @@ class MovieForm extends Component {
 
     render() {
         if (this.state.movie) {
-            const {name, description, genre, release_date, finish_date} = this.state.movie;
-            const {fileName, submitEnabled} = this.state;
+            const {name, description, release_date, genre, finish_date} = this.state.movie;
+            const {fileName, submitEnabled, categories} = this.state;
             return <div className="mt-3">
                 {alert}
                 <form onSubmit={this.formSubmitted}>
@@ -133,7 +128,7 @@ class MovieForm extends Component {
                         </div>
                         <select size="4" className="custom-select" id="inputGroupSelect01" value={genre}
                                 multiple="multiple" name={'genre'} onChange={this.selectChanged}>
-                           {this.state.categories.map((category, i) => {
+                           {Object.values(categories).map((category, i) => {
                                return <option key={i} value={category.id} name={category.name}>{category.name}</option>})}
                         </select>
                     </div>
@@ -151,5 +146,15 @@ class MovieForm extends Component {
     }
 }
 
+const mapStateToProps = (state, props) => {
+    return {
+        movie: state.item.movie,
+        categories: state.lists.categories
+    }
+};
 
-export default MovieForm;
+const mapDispatchToProps = dispatch => ({
+    request: (url) => dispatch(request(url))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MovieForm);

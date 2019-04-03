@@ -3,7 +3,8 @@ import {SUCCESS} from "../actions/actionSuccess";
 
 const initialState = {
     movies: {},
-    halls: {}
+    halls: {},
+    categories: {}
 };
 
 const listReducer = (state = initialState, action) => {
@@ -11,6 +12,7 @@ const listReducer = (state = initialState, action) => {
         case SUCCESS:
             if (action.url === 'halls') return {...state, halls: action.data};
             else if (action.url === 'movies') return {...state,  movies: action.data};
+            else if (action.url === 'categories') return {...state,  categories: action.data};
             else return state;
         default:
             return state;

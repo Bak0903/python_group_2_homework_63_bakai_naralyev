@@ -43,7 +43,7 @@ export const getMovie = (url) => {
         return axios.get(url).then(response => {
             const categories = response.data.genre.map(element => {
                 return axios.get('categories/' + element).then(response => {
-                    return response.data.name;
+                    return response.data;
                 });
             });
             return Promise.all(categories)
