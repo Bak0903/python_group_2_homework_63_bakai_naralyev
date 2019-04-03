@@ -5,25 +5,24 @@ import HallForm from "../../components/HallForm/HallForm";
 
 class HallEdit extends Component {
     state = {
-        hall: null,
         alert: null,
     };
 
-    componentDidMount() {
-        axios.get('halls/' + this.props.match.params.id)
-            .then(response => {
-                const hall = response.data;
-                this.setState(prevState => {
-                    const newState = {...prevState};
-                    newState.hall = hall;
-                    return newState;
-                });
-            })
-            .catch(error => {
-                console.log(error);
-                console.log(error.response);
-            });
-    }
+    // componentDidMount() {
+    //     axios.get('halls/' + this.props.match.params.id)
+    //         .then(response => {
+    //             const hall = response.data;
+    //             this.setState(prevState => {
+    //                 const newState = {...prevState};
+    //                 newState.hall = hall;
+    //                 return newState;
+    //             });
+    //         })
+    //         .catch(error => {
+    //             console.log(error);
+    //             console.log(error.response);
+    //         });
+    // }
 
     showErrorAlert = (error) => {
         this.setState(prevState => {
@@ -65,10 +64,10 @@ class HallEdit extends Component {
     };
 
     render() {
-        const {alert, hall} = this.state;
+        const {alert} = this.state;
         return <div>
             {alert ? <div className={"mb-2 alert alert-" + alert.type}>{alert.message}</div> : null}
-            {hall ? <HallForm onSubmit={this.formSubmitted} hall={hall}/> : null}
+            <HallForm onSubmit={this.formSubmitted}/>
         </div>
     }
 }

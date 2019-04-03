@@ -1,5 +1,6 @@
 import {SUCCESS} from "../actions/actionSuccess";
 
+
 const initialState = {
     movies: {},
     halls: {}

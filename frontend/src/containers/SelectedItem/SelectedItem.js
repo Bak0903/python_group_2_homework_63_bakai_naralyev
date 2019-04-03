@@ -16,17 +16,27 @@ class SelectedItem extends Component {
         return 'shows/?' + this.props.type +'_id=' + id + '&starts_after=' + start + '&starts_before=' + end;
     };
 
+    deleteItem = (url) => {
+        this.props.deleteItem(url);
+        if (this.props.type === 'hall')
+            this.props.history.replace('/halls/');
+        if (this.props.type === 'movie')
+            this.props.history.replace('/');
+    };
+
     componentDidMount() {
         const id = this.props.match.params.id;
         const url = this.props.type + 's/' + id;
 
         if (this.props.type === 'movie')
             this.props.getMovie(url);
+
         if (this.props.type === 'hall')
             this.props.request(url);
 
         const showsUrl = this.composeUrl(id);
-        this.props.request(showsUrl);
+        if (this.props.loading)
+            this.props.request(showsUrl);
     }
 
     render() {
@@ -52,7 +62,7 @@ class SelectedItem extends Component {
                 </div>
 
                     {localStorage.getItem('auth-token') ?
-                        <div><button className="btn btn-danger w-25 float-right ml-2 mr-2" onClick={() => this.props.deleteItem(deleteId)}>Удалить</button></div> :
+                        <div><button className="btn btn-danger w-25 float-right ml-2 mr-2" onClick={() => this.deleteItem(deleteId)}>Удалить</button></div> :
                         <div><NavLink className="btn btn-danger w-25 float-right ml-2 mr-2" to="/login">Удалить</NavLink></div>}
                     <NavLink to={'/halls/' + id + '/edit'} className="btn btn-secondary w-25 float-right ml-2 mr-2">Редактировать</NavLink>
                 </div>
@@ -82,8 +92,7 @@ const mapStateToProps = (state, props) => {
         errors: state.errors,
         loading: state.loading,
         shows: state.shows[shows],
-        type: type,
-        // categories: state.item.categories
+        type: type
     }
 };
 

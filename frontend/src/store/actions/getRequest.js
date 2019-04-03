@@ -19,7 +19,7 @@ export const request = (url) => {
     }
 };
 
-export const deleteRequest = (url) => {
+export const deleteRequest = (url, id) => {
     return dispatch => {
         dispatch(requestStatus());
         return axios.delete(url, {
@@ -27,8 +27,8 @@ export const deleteRequest = (url) => {
             'Content-Type': 'application/json',
             'Authorization': 'Token ' + localStorage.getItem('auth-token')
             }
-        }).then(this.props.history.push('/halls/'))
-        .catch(error => {
+        }).then(dispatch(requestStatus()))
+            .catch(error => {
             dispatch(requestStatus());
             console.log(error);
             console.log(error.response);
@@ -62,14 +62,14 @@ export const getMovie = (url) => {
 
 export const postRequest = (url, formData) => {
     return dispatch => {
-        console.log(formData);
         dispatch(requestStatus());
         return axios.post(url, formData, {
             headers: {
             'Content-Type': 'multipart/form-data',
             'Authorization': 'Token ' + localStorage.getItem('auth-token')
             }
-        }).then(dispatch(requestStatus())).catch(error => {
+        }).then(dispatch(requestStatus())
+        ).catch(error => {
             dispatch(requestStatus());
             console.log(error);
             console.log(error.response);

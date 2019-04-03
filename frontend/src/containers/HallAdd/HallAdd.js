@@ -31,22 +31,7 @@ class HallAdd extends Component {
     formSubmitted = (hall) => {
         const formData = this.gatherFormData(hall);
         const url = 'halls/';
-        this.props.postRequest(url, formData);
-        // return axios.post('halls/', formData, {
-        //     headers: {
-        //     'Content-Type': 'multipart/form-data',
-        //     'Authorization': 'Token ' + localStorage.getItem('auth-token')
-        //     }
-        // })
-        //     .then(response => {
-        //         const hall = response.data;
-        //         this.props.history.replace('/halls/' + hall.id);
-        //     })
-        //     .catch(error => {
-        //         console.log(error);
-        //         console.log(error.response);
-        //         this.showErrorAlert(error.response);
-        //     });
+        this.props.postRequest(url, formData).then(this.props.history.replace('/halls/'));
     };
 
     render() {

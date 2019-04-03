@@ -11,9 +11,11 @@ class AllItems extends Component {
     }
 
     shouldComponentUpdate (nextProps) {
-        if (nextProps.type !== this.props.type)
+        if (nextProps.list !== this.props.list){
             this.props.request(nextProps.type);
-        return true;
+            return true;
+        }
+        else return false;
     }
 
     render() {
