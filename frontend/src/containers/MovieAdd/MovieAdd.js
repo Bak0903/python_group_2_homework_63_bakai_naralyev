@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import axios from 'axios';
 import MovieForm from '../../components/MovieForm/MovieForm';
+import {connect} from "react-redux";
+import {postRequest} from "../../store/actions/getRequest";
 
 
 class MovieAdd extends Component {
@@ -33,32 +34,32 @@ class MovieAdd extends Component {
 
     formSubmitted = (movie) => {
         const formData = this.gatherFormData(movie);
-        return axios.post('movies/', formData, {
-            headers: {
-            'Content-Type': 'multipart/form-data',
-            'Authorization': 'Token ' + localStorage.getItem('auth-token')
-            }
-        })
-            .then(response => {
-                const movie = response.data;
-                console.log(movie);
-                this.props.history.replace('/movies/' + movie.id);
-            })
-            .catch(error => {
-                console.log(error);
-                console.log(error.response);
-                this.showErrorAlert(error.response);
-            });
+        const url = 'movies/';
+        this.props.postRequest(url, formData).then(this.props.history.replace('/'));
     };
 
     render() {
+        const errors = this.props.errors;
+        if (errors)
+            this.showErrorAlert(this.props.errors);
         const alert = this.state.alert;
         return <div>
-            {alert ? <div className={"mb-2 alert alert-" + alert.type}>{alert.message}</div> : null}
-            <MovieForm onSubmit={this.formSubmitted}/>
+                {alert ? <div className={"mb-2 alert alert-" + alert.type}>{alert.message}</div> : null}
+                <MovieForm onSubmit={this.formSubmitted}/>
         </div>
     }
 }
 
 
-export default MovieAdd;
+const mapStateToProps = (state) => {
+    return {
+        errors: state.errors.response,
+    }
+};
+
+const mapDispatchToProps = dispatch => ({
+    postRequest: (url, formData) => dispatch(postRequest(url, formData))
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(MovieAdd);

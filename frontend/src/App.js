@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
 import './App.css';
 import MovieAdd from './containers/MovieAdd/MovieAdd';
-import EditMovie from './containers/EditMovie/EditMovie';
+import EditMovie from './containers/MovieEdit/EditMovie';
 import AllItems from './containers/AllItems/AllItems';
 import HallAdd from './containers/HallAdd/HallAdd';
 import HallEdit from './containers/HallEdit/HallEdit';
