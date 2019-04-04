@@ -28,7 +28,7 @@ class Register extends Component {
         event.preventDefault();
         if (this.passwordsMatch()) {
             const data = {
-                usernam: this.state.user.username,
+                username: this.state.user.username,
                 password: this.state.user.password,
                 first_name: this.state.user.first_name,
                 last_name: this.state.user.last_name,
