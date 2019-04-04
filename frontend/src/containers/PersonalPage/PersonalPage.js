@@ -15,6 +15,12 @@ class PersonalPage extends Component {
             this.setState({formVisible: 'invisible'});
     };
 
+    // shouldComponentUpdate(nextProps) {
+    //     console.log(nextProps.user);
+    //     console.log(this.props.user);
+    //     return (nextProps.user !== this.props.user)
+    // }
+
     render () {
         const {username, first_name, last_name, email} = this.props.user;
         return <Fragment>

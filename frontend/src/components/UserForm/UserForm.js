@@ -27,7 +27,6 @@ class UserForm extends Component {
 
     passwordsMatch = () => {
         const {password, passwordConfirm} = this.state.user;
-        console.log(password, passwordConfirm);
         return password === passwordConfirm
     };
 
@@ -36,7 +35,6 @@ class UserForm extends Component {
         let formData = new FormData();
         Object.keys(this.state.user).forEach(key => {
             const value = this.state.user[key];
-            console.log(value);
             if (value) {
                 if(Array.isArray(value)) {
                     value.forEach(item => formData.append(key, item));
@@ -55,7 +53,6 @@ class UserForm extends Component {
             const formData = this.gatherFormData();
             return this.props.update(url, formData).then(result => {
                 if (result.type === SUCCESS) {
-                    console.log('SUCCESS');
                 }
             })
         }

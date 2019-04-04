@@ -22,7 +22,7 @@ class App extends Component {
                 <BrowserRouter>
                     <Layout>
                         <Switch>
-                            <Route path="/user" component={PersonalPage}/>
+                            <AuthRoute path="/user" component={PersonalPage}/>
                             <Route path="/register" component={Register}/>
                             <Route path="/login" component={Login}/>
                             <AuthRoute path="/halls/add" component={HallAdd}/>

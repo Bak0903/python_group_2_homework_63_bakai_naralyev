@@ -1,7 +1,7 @@
 import axios from "axios";
 import {catchError} from '../statuses/actionError';
 import {requestStatus} from '../statuses/actionLoading';
-import {successRequest} from "../statuses/actionSuccess";
+import {successEdit} from "../statuses/successEdit";
 
 
 export const update = (url, formData) => {
@@ -14,7 +14,7 @@ export const update = (url, formData) => {
             }
         }).then(response => {
             dispatch(requestStatus());
-            return dispatch(successRequest(response.data, url));
+            return dispatch(successEdit(response.data));
         }).catch(error => {
             dispatch(requestStatus());
             console.log(error);

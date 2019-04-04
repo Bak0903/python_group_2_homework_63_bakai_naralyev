@@ -9,7 +9,7 @@ const AuthRoute = (props) => {
     }
     return <Redirect to={{
         pathname: "/login",
-        state: {next: props.lo}
+        state: {next: props.location}
     }}/>
 };
 
