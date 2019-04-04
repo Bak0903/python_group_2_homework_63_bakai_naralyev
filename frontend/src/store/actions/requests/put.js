@@ -1,6 +1,7 @@
 import axios from "axios";
 import {catchError} from '../statuses/actionError';
 import {requestStatus} from '../statuses/actionLoading';
+import {successRequest} from "../statuses/actionSuccess";
 
 
 export const putRequest = (url, formData) => {
@@ -11,8 +12,10 @@ export const putRequest = (url, formData) => {
             'Content-Type': 'multipart/form-data',
             'Authorization': 'Token ' + localStorage.getItem('auth-token')
             }
-        }).then(dispatch(requestStatus())
-        ).catch(error => {
+        }).then(response => {
+            dispatch(requestStatus());
+            return dispatch(successRequest(response.data, url));
+        }).catch(error => {
             dispatch(requestStatus());
             console.log(error);
             console.log(error.response);

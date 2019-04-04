@@ -7,12 +7,16 @@ import {request} from "../../store/actions/requests/get";
 class AllItems extends Component {
 
     componentDidMount() {
-        this.props.request(this.props.type);
+            this.props.request('halls');
+            this.props.request('movies');
     }
 
     // shouldComponentUpdate (nextProps) {
+    //     console.log(nextProps.type);
+    //     console.log(this.props.type);
     //     if (this.props.type !== nextProps.type){
-    //         return true;
+    //         this.props.request(this.props.type);
+    //         return true
     //     }
     //     return false
     // }

@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import {login} from "../../store/actions/requests/login";
 import {connect} from "react-redux";
-import {SUCCESS} from "../../store/actions/statuses/actionSuccess";
+import {SUCCESS_LOGIN} from "../../store/actions/statuses/successLogin";
 import {CATCHERROR} from "../../store/actions/statuses/actionError";
 
 
@@ -19,8 +19,8 @@ class Login extends Component {
         event.preventDefault();
         const url = 'login/';
         return this.props.login(url, this.state.credentials).then(result => {
-            if (result.type === SUCCESS) {
-                console.log('SUCCESS');
+            if (result.type === SUCCESS_LOGIN) {
+                console.log('SUCCESS_LOGIN');
                 this.props.history.replace('/user/');}
             if (result.type === CATCHERROR) {
                 console.log('CATCHERROR');

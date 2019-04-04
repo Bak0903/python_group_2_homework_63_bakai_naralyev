@@ -64,7 +64,7 @@ class HallForm extends Component {
         const submitEnabled = this.state.submitEnabled;
         if (this.state.hall) {
             return <Fragment>
-                {alert}
+                <div>{alert}</div>
                 <form className="mt-3" onSubmit={this.formSubmitted}>
                     <div className="form-group">
                         <label className="font-weight-bold">Название</label>

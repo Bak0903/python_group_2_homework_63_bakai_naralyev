@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import HallForm from "../../components/HallForm/HallForm";
 import {connect} from "react-redux";
 import {putRequest} from "../../store/actions/requests/put";
+import {SUCCESS} from "../../store/actions/statuses/actionSuccess";
 
 
 class HallEdit extends Component {
@@ -31,7 +32,12 @@ class HallEdit extends Component {
     formSubmitted = (hall) => {
         const formData = this.gatherFormData(hall);
         const url = 'halls/' + this.props.match.params.id + '/';
-        this.props.putRequest(url, formData).then(this.props.history.replace('/halls/'));
+        return this.props.putRequest(url, formData).then(result => {
+                if(result.type === SUCCESS) {
+                    console.log('SUCCESS');
+                    this.props.history.replace('/halls/');
+                }
+            });
     };
 
     render() {
