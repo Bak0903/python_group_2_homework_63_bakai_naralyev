@@ -1,25 +1,22 @@
 import React, {Component, Fragment} from 'react';
 import UserForm from '../../components/UserForm/UserForm';
+import {connect} from "react-redux";
+
 
 class PersonalPage extends Component {
     state = {
-        user: {
-            id: localStorage.getItem('id'),
-            username: localStorage.getItem('username'),
-            first_name: localStorage.getItem('first_name'),
-            last_name: localStorage.getItem('last_name'),
-            email: localStorage.getItem('email')
-        },
-
         formVisible: 'invisible'
     };
 
     turnForm = () => {
-        this.setState({formVisible: 'visible'});
+        if (this.state.formVisible === 'invisible')
+            this.setState({formVisible: 'visible'});
+        if (this.state.formVisible === 'visible')
+            this.setState({formVisible: 'invisible'});
     };
 
     render () {
-        const {username, first_name, last_name, email} = this.state.user;
+        const {username, first_name, last_name, email} = this.props.user;
         return <Fragment>
             <p>Логин: {username}</p>
             <p>Имя: {first_name}</p>
@@ -34,4 +31,11 @@ class PersonalPage extends Component {
 }
 
 
-export default PersonalPage;
+const mapStateToProps = (state) => {
+    return {
+        user: state.user,
+    }
+};
+
+
+export default connect(mapStateToProps)(PersonalPage);
