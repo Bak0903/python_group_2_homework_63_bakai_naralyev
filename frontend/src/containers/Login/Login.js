@@ -1,6 +1,8 @@
 import React, {Component, Fragment} from 'react';
 import {login} from "../../store/actions/requests/login";
-import connect from "react-redux/es/connect/connect";
+import {connect} from "react-redux";
+import {SUCCESS} from "../../store/actions/statuses/actionSuccess";
+import {CATCHERROR} from "../../store/actions/statuses/actionError";
 
 
 
@@ -16,15 +18,14 @@ class Login extends Component {
     formSubmitted = (event) => {
         event.preventDefault();
         const url = 'login/';
-        this.props.login(url, this.state.credentials);
-        console.log(this.props.errors);
-        if (this.props.errors) {
-            this.setState({
-                ...this.state,
-                errors: this.props.errors.data
-            })
-        }
-        else this.props.history.replace('/');
+        return this.props.login(url, this.state.credentials).then(result => {
+            if (result.type === SUCCESS) {
+                console.log('SUCCESS');
+                this.props.history.replace('/user/');}
+            if (result.type === CATCHERROR) {
+                console.log('CATCHERROR');
+            }
+        })
     };
 
     inputChanged = (event) => {
@@ -38,8 +39,9 @@ class Login extends Component {
     };
 
     showErrors = (name) => {
-        if(this.state.errors && this.state.errors[name]) {
-            return this.state.errors[name].map((error, index) => <p className="text-danger" key={index}>{error}</p>);
+        const errors = this.props.errors;
+        if (errors && errors[name]) {
+            return errors[name].map((error, index) => <p className="text-danger" key={index}>{error}</p>);
         }
         return null;
     };
@@ -62,7 +64,7 @@ class Login extends Component {
                            onChange={this.inputChanged}/>
                     {this.showErrors('password')}
                 </div>
-                <button type="submit" className="btn btn-primary mt-2">Войти</button>
+                <button type="submit" disabled={this.props.loading} className="btn btn-primary mt-2">Войти</button>
             </form>
         </Fragment>
     }
@@ -71,6 +73,7 @@ class Login extends Component {
 const mapStateToProps = (state) => {
     return {
         errors: state.errors,
+        loading: state.loading
     }
 };
 

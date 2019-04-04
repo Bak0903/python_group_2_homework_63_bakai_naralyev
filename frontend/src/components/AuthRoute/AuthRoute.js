@@ -1,16 +1,20 @@
 import React from 'react'
 import {Redirect, Route} from 'react-router'
+import {connect} from "react-redux";
 
 
 const AuthRoute = (props) => {
-    if(localStorage.getItem('auth-token')) {
+    if(props.user.username) {
         return <Route {...props} />
-    } else {
-        return <Redirect to={{
-            pathname: "/login",
-            state: {next: props.path}
-        }}/>
     }
+    return <Redirect to={{
+        pathname: "/login",
+        state: {next: props.lo}
+    }}/>
 };
 
-export default AuthRoute;
+
+const mapStateToProps = state => ({user: state.user});
+const mapDispatchToProps = dispatch => ({});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AuthRoute);

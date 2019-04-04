@@ -3,7 +3,6 @@ import {register} from "../../store/actions/requests/register";
 import {login} from "../../store/actions/requests/login";
 import connect from "react-redux/es/connect/connect";
 import {SUCCESS} from "../../store/actions/statuses/actionSuccess";
-import {CATCHERROR} from "../../store/actions/statuses/actionError";
 
 
 class Register extends Component {
@@ -38,10 +37,6 @@ class Register extends Component {
                 if(result.type === SUCCESS) {
                     console.log('SUCCESS');
                     this.props.history.replace('/login/');
-                }
-                if(result.type === CATCHERROR) {
-                    console.log('CATCHERROR');
-                    console.log(this.props.errors);
                 }
             });
         } else {

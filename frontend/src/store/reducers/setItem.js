@@ -6,7 +6,7 @@ const initialState = {
     categories: {}
 };
 
-const userReducer = (state = initialState, action) => {
+const itemReducer = (state = initialState, action) => {
     switch (action.type) {
         case SUCCESS:
             const url = action.url.substring(0, 4);
@@ -18,4 +18,4 @@ const userReducer = (state = initialState, action) => {
     }
 };
 
-export default userReducer;
+export default itemReducer;

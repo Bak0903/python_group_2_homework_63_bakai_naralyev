@@ -6,9 +6,8 @@ import EditMovie from './containers/MovieEdit/EditMovie';
 import AllItems from './containers/AllItems/AllItems';
 import HallAdd from './containers/HallAdd/HallAdd';
 import HallEdit from './containers/HallEdit/HallEdit';
-import Layout from "./Layout";
+import Layout from "./components/Layout/Layout";
 import Login from "./containers/Login/Login";
-import Logout from "./containers/Logout/Logout";
 import AuthRoute from "./components/AuthRoute/AuthRoute";
 import Register from './containers/Register/Register';
 import PersonalPage from './containers/PersonalPage/PersonalPage';
@@ -26,7 +25,6 @@ class App extends Component {
                             <Route path="/user" component={PersonalPage}/>
                             <Route path="/register" component={Register}/>
                             <Route path="/login" component={Login}/>
-                            <Route path="/logout" component={Logout}/>
                             <AuthRoute path="/halls/add" component={HallAdd}/>
                             <AuthRoute path="/halls/:id/edit" component={HallEdit}/>
                             <Route path="/halls/:id" component={SelectedItem}/>
