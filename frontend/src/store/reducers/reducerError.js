@@ -8,7 +8,7 @@ const movieListReducer = (state = initialState, action) => {
             if (action.errors)
                 return action.errors;
             else
-                return null;
+                return state;
         default:
             return state;
     }
