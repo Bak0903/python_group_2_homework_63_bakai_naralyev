@@ -24,7 +24,7 @@ class PersonalPage extends Component {
             <p>Электронная почта: {email}</p>
             <button onClick={this.turnForm}>Редакировать</button>
             <div className={this.state.formVisible}>
-                <UserForm user={this.state.user}/>
+                <UserForm/>
             </div>
         </Fragment>
     }

@@ -1,5 +1,7 @@
 import React, {Component, Fragment} from 'react';
-import axios from "axios";
+import {connect} from "react-redux";
+import {update} from "../../store/actions/requests/patch";
+import {SUCCESS} from "../../store/actions/statuses/actionSuccess";
 
 
 class UserForm extends Component {
@@ -29,11 +31,6 @@ class UserForm extends Component {
         return password === passwordConfirm
     };
 
-    updateLocalStorage = () => {
-        localStorage.setItem('first_name', this.state.user.first_name);
-        localStorage.setItem('last_name', this.state.user.last_name);
-        localStorage.setItem('email', this.state.user.email);
-    };
 
     gatherFormData = () => {
         let formData = new FormData();
@@ -54,21 +51,13 @@ class UserForm extends Component {
     formSubmitted = (event) => {
         event.preventDefault();
         if (this.passwordsMatch()) {
+            const url = 'user/' + this.props.user.id + '/edit/';
             const formData = this.gatherFormData();
-            axios.patch('user/' + this.state.user.id + '/edit/', formData, {
-            headers: {
-            'Content-Type': 'multipart/form-data',
-            'Authorization': 'Token ' + localStorage.getItem('auth-token')
-            }}).then(response => {
-                console.log(response);
-                this.updateLocalStorage();
-            }).catch(error => {
-                console.log(error);
-                this.setState({
-                    ...this.state,
-                    errors: error
-                })
-            });
+            return this.props.update(url, formData).then(result => {
+                if (result.type === SUCCESS) {
+                    console.log('SUCCESS');
+                }
+            })
         }
         else {
             this.setState({
@@ -141,4 +130,17 @@ class UserForm extends Component {
 }
 
 
-export default UserForm;
+const mapStateToProps = (state) => {
+    return {
+        user: state.user,
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        update: (url, formData) => dispatch(update(url, formData))
+    }
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserForm);
