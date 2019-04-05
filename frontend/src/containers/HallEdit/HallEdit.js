@@ -35,7 +35,7 @@ class HallEdit extends Component {
         return this.props.putRequest(url, formData).then(result => {
                 if(result.type === SUCCESS) {
                     console.log('SUCCESS');
-                    this.props.history.replace('/halls/');
+                    this.props.history.replace('/halls/' + this.props.match.params.id);
                 }
             });
     };

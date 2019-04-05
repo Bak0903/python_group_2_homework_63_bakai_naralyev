@@ -11,16 +11,6 @@ class AllItems extends Component {
             this.props.request('movies');
     }
 
-    // shouldComponentUpdate (nextProps) {
-    //     console.log(nextProps.type);
-    //     console.log(this.props.type);
-    //     if (this.props.type !== nextProps.type){
-    //         this.props.request(this.props.type);
-    //         return true
-    //     }
-    //     return false
-    // }
-
     render() {
         const {loading, list, errors, type} = this.props;
         if (loading)
