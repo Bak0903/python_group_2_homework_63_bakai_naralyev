@@ -12,10 +12,20 @@ import AuthRoute from "./components/AuthRoute/AuthRoute";
 import Register from './containers/Register/Register';
 import PersonalPage from './containers/PersonalPage/PersonalPage';
 import SelectedItem from "./containers/SelectedItem/SelectedItem";
+import {tokenLoginRequest} from "./store/actions/requests/token-login";
+import {connect} from "react-redux";
 
 
 
 class App extends Component {
+
+    componentDidMount() {
+        const token = localStorage.getItem('auth-token');
+        if (token) {
+            this.props.tokenLogin();
+        }
+    }
+
     render() {
         return (
             <div className={'App'}>
@@ -41,5 +51,11 @@ class App extends Component {
     }
 }
 
-export default App;
+const mapStateToProps = state => state.user;
+const mapDispatchToProps = dispatch => ({
+    tokenLogin: () => dispatch(tokenLoginRequest())
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
 

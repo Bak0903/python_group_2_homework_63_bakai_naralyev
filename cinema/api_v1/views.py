@@ -1,11 +1,11 @@
 from webapp.models import Movie, Category, Hall, Seat, Show, Discount, Ticket, Reservation
 from rest_framework import viewsets
-from api_v1.serializers import  MovieSerializer, CategorySerializer, HallSerializer, SeatSerializer, ShowSerializer,\
-                                DiscountSerializer, TicketSerializer, ReservationSerializer, UserSerializer
+from api_v1.serializers import  MovieSerializer, CategorySerializer, HallSerializer, SeatSerializer, ShowSerializer, \
+    DiscountSerializer, TicketSerializer, ReservationSerializer, UserSerializer, AuthTokenSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.generics import CreateAPIView, UpdateAPIView
 from django.contrib.auth.models import User
-from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.authtoken.views import ObtainAuthToken, APIView
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 
@@ -26,6 +26,23 @@ class LoginView(ObtainAuthToken):
             'email': user.email
         })
 
+
+class TokenLoginView(APIView):
+    serializer_class = AuthTokenSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data, context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        token = serializer.validated_data['token']
+        user = token.user
+        return Response({
+            'token': token.key,
+            'id': user.id,
+            'username': user.username,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'email': user.email
+        })
 
 class UserCreateView(CreateAPIView):
     model = User

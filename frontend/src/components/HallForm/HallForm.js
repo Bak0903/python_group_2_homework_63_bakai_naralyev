@@ -13,7 +13,6 @@ class HallForm extends Component {
             submitEnabled: true
         };
         if(this.props.item.name) {
-            console.log(this.props.item.name);
             this.state.hall.name= this.props.item.name;
         }
     }
